@@ -28,13 +28,16 @@ This use case resolves to a **combination** — which is exactly what the orches
 - **Connector** — Google Sheets (off-the-shelf; you connect it, no build).
 - **MCP server** — QuickBooks Online (`quickbooks-mcp/`; the one real build, because QBO has no reliable off-the-shelf connector).
 
-## Setup (about an hour, plus QuickBooks app approval)
+## Setup
 
-1. **Ledger.** Upload `ledger/Bookkeeping-Ledger-Template.xlsx` to Google Drive → open with Google Sheets. Fill in the **Vendor Map** tab with your real vendors → QuickBooks categories.
-2. **Guard (optional but recommended).** Extensions → Apps Script → paste `agent/dedup.gs` → run `setup()` once.
-3. **QuickBooks MCP server.** Follow `quickbooks-mcp/README.md`: create an Intuit developer app, get sandbox credentials and a refresh token, fill `.env`, and run the server. Test against the QuickBooks **sandbox** before going live.
-4. **Agent.** Create a Claude Project (or agent) using `agent/AGENT.md` as its instructions. Connect the Google Sheets connector (pointed at your ledger) and register the QuickBooks MCP server.
-5. **Go.** Upload a document. Review the staged rows. Approve. Watch them post.
+**Non-technical? Start with [`QUICKSTART.md`](QUICKSTART.md) — 3 steps, ~20 minutes, no coding.** The QuickBooks part is a double-click installer that mints your token and wires up Claude Desktop for you.
+
+The steps in brief:
+1. **Ledger.** Upload `ledger/Bookkeeping-Ledger-Template.xlsx` to Google Drive → open with Google Sheets. Fill in the **Vendor Map** tab.
+2. **QuickBooks.** Get a Client ID + Secret from the Intuit developer portal, then double-click `quickbooks-mcp/install.command` (Mac) / run `install.sh` (Mac/Linux). It installs everything, does the browser OAuth, and registers the server with Claude Desktop. Test on the QuickBooks **sandbox** first.
+3. **Agent.** Paste `agent/AGENT.md` into a Claude Project and connect your Google Sheet.
+4. **Guard (optional).** In the sheet: Extensions → Apps Script → paste `agent/dedup.gs` → run `setup()` once.
+5. **Go.** Drag in a document. Review the staged rows. Approve. It posts.
 
 ## How a transaction flows
 
