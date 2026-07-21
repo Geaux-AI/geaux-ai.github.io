@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geaux AI Day 1 Intro</title>
+<style>
+  :root{
+    --black:#131313;
+    --black-soft:#1B1B1B;
+    --black-raised:#222120;
+    --amber:#E9A55C;
+    --amber-bright:#F2B879;
+    --amber-deep:#6B5533;
+    --ink:#F3EDE4;
+    --muted:#A99F91;
+    --line:#2C2A27;
+    --serif: Georgia, Cambria, "Times New Roman", Times, serif;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:1080px;height:1350px;overflow:hidden;background:var(--black);}
+
+  .canvas{
+    position:relative;
+    width:1080px;
+    height:1350px;
+    background: var(--black);
+    color:var(--ink);
+    font-family:var(--sans);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:88px 96px 72px;
+    overflow:hidden;
+  }
+
+  /* faint background watermark for editorial depth */
+  .watermark{
+    position:absolute;
+    right:-70px;
+    bottom:170px;
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:560px;
+    line-height:1;
+    color:rgba(243,237,228,.028);
+    letter-spacing:-.02em;
+    z-index:0;
+    pointer-events:none;
+  }
+
+  /* ===== TOP: wordmark lockup ===== */
+  .topbar{
+    position:relative;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .wordmark{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .mark{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:2.5px solid var(--amber);
+    position:relative;
+    flex-shrink:0;
+  }
+  .mark::after{
+    content:"";
+    position:absolute;
+    top:50%;left:50%;
+    width:20px;height:20px;
+    background:var(--amber);
+    border-radius:3px;
+    transform:translate(-50%,-50%) rotate(45deg);
+  }
+  .wordmark span{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:34px;
+    letter-spacing:-.01em;
+    color:var(--ink);
+  }
+  .wordmark span em{
+    color:var(--amber);
+    font-style:normal;
+  }
+  .daytag{
+    font-family:var(--mono);
+    font-size:15px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:9px 20px;
+  }
+
+  /* ===== MIDDLE: hero content ===== */
+  .hero{
+    position:relative;
+    z-index:2;
+    margin-top:40px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:20px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:30px;
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:112px;
+    line-height:1.04;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    max-width:900px;
+  }
+  h1 em{
+    color:var(--amber);
+    font-style:normal;
+  }
+  .subhead{
+    margin-top:38px;
+    font-size:32px;
+    line-height:1.5;
+    color:var(--muted);
+    max-width:760px;
+    font-weight:400;
+  }
+  .tagline{
+    margin-top:46px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+  }
+  .tagline .bar{
+    width:44px;
+    height:3px;
+    background:var(--amber);
+    flex-shrink:0;
+  }
+  .tagline p{
+    font-family:var(--mono);
+    font-size:20px;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink);
+    line-height:1.6;
+    max-width:640px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer{
+    position:relative;
+    z-index:2;
+  }
+  .rule{
+    height:1px;
+    background:var(--line);
+    margin-bottom:32px;
+  }
+  .footrow{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .follow{
+    font-family:var(--mono);
+    font-size:22px;
+    letter-spacing:.03em;
+    color:var(--muted);
+  }
+  .follow b{
+    color:var(--amber);
+    font-weight:600;
+  }
+  .loc{
+    font-family:var(--mono);
+    font-size:16px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    opacity:.7;
+  }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="topbar">
+    <div class="wordmark">
+      <span>Geaux <em>AI</em></span>
+    </div>
+    <div class="daytag">Day 01 · Intro</div>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Who we are</div>
+    <h1>Meet Geaux <em>AI</em>.</h1>
+    <p class="subhead">We build the boring stuff, so you can get back to what matters.</p>
+    <div class="tagline">
+      <div class="bar"></div>
+      <p>AI agents &amp; automation for small businesses &amp; student orgs</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="rule"></div>
+    <div class="footrow">
+      <div class="follow">Follow <b>@geaux.ai</b></div>
+      <div class="loc">Baton Rouge, LA</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
