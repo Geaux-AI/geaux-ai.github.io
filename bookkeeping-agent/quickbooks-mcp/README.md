@@ -75,7 +75,50 @@ layer, and treat this server's credentials as write-capable to your books.
 
 ---
 
-## Setup
+## Quick setup (3 steps)
+
+If you just want it working in Claude Desktop, this is all you need. The
+installer does the venv, the QuickBooks connection, and the Claude Desktop
+wiring for you — you never copy a token by hand.
+
+**Step 1 — Get your app keys from Intuit (about 4 clicks).**
+Sign in at <https://developer.intuit.com>, then:
+
+1. **My Apps** → open your app (or **Create an app** → *QuickBooks Online
+   Accounting API*).
+2. Open **Keys & credentials** and keep this page handy — you'll copy the
+   **Client ID** and **Client Secret** during install.
+3. On the same app, open **Redirect URIs** and add exactly:
+   `http://localhost:8000/callback` — then save.
+
+**Step 2 — Run the installer.**
+
+- **macOS:** double-click **`install.command`** in this folder. (If macOS warns
+  it's from an unidentified developer, right-click it → **Open** → **Open**.)
+- **macOS/Linux (Terminal):** `./install.sh`
+
+It checks Python, installs everything, asks for your Client ID / Secret, opens
+your browser to connect QuickBooks, and adds the server to Claude Desktop
+automatically.
+
+**Step 3 — Restart Claude Desktop.**
+Fully **quit** Claude Desktop (on a Mac, `Cmd+Q` — closing the window is not
+enough) and reopen it. The QuickBooks tools will be available.
+
+> **Windows:** the auto-installer scripts are macOS/Linux only. On Windows,
+> create the venv and `pip install -r requirements.txt`, run
+> `python get_token.py` to connect QuickBooks, then add the server block shown
+> under *Register with an MCP client* to
+> `%APPDATA%\Claude\claude_desktop_config.json`.
+
+Re-running the installer is safe (idempotent): it reuses the venv, backs up your
+Claude config before changing it, and only re-connects QuickBooks if you ask.
+
+---
+
+## Detailed / manual setup
+
+Use this if you prefer to do the steps yourself or the installer can't run.
 
 ### 1. Create an Intuit app
 
@@ -94,7 +137,20 @@ id) is shown there — that's your `QBO_REALM_ID` for sandbox.
 
 ### 3. Get a refresh token
 
-Easiest path — the **OAuth 2.0 Playground**
+**Recommended:** run the bundled helper after creating `.env` (or let
+`install.sh` call it for you):
+
+```bash
+python get_token.py
+```
+
+It starts a local callback on `http://localhost:8000/callback`, opens your
+browser to approve the connection, exchanges the code, and writes
+`QBO_REFRESH_TOKEN` and `QBO_REALM_ID` into `.env` automatically. Make sure
+`http://localhost:8000/callback` is listed under your app's **Redirect URIs** in
+the Intuit portal first.
+
+Alternative path — the **OAuth 2.0 Playground**
 (<https://developer.intuit.com/app/developer/playground>):
 
 1. Select your app and the `com.intuit.quickbooks.accounting` scope.

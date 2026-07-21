@@ -20,11 +20,12 @@ You need two codes from Intuit first — this is the only slightly technical par
 
 1. Go to the [Intuit Developer portal](https://developer.intuit.com) → sign in with your QuickBooks login → **Create an app** → choose **QuickBooks Online Accounting**.
 2. Open your app → **Keys & credentials**. You'll see a **Client ID** and **Client Secret**. Keep that tab open.
-3. In the `quickbooks-mcp` folder, **double-click `install.command`** (Mac) or run `./install.sh` (Mac/Linux).
+3. On that same page, find **Redirect URIs**, click **Add URI**, paste `http://localhost:8000/callback`, and **Save**. (This is the one thing the installer can't do for you — it lets your browser hand the connection back.)
+4. In the `quickbooks-mcp` folder, **double-click `install.command`** (Mac) or run `./install.sh` (Mac/Linux).
    - It will ask you to paste the Client ID and Client Secret.
    - Then your browser opens — click **Authorize** / **Connect**.
    - It finishes the rest for you: installs everything, gets your secure token, and connects the agent to Claude Desktop.
-4. **Restart Claude Desktop** when it says to.
+5. **Restart Claude Desktop** when it says to.
 
 Do this against the QuickBooks **Sandbox** first (a free test company) to watch it work with no risk, then switch to your real company by changing one setting the installer explains.
 
