@@ -50,17 +50,28 @@ It routes to `finance` + `small-business`, collects their cards, and hands you a
 
 You can also call any specialist directly when you already know the seat.
 
-## Installable skills behind each seat
+## Installed skills behind each seat
 
-- **Developers** — Superpowers, Context7, Skill Creator, MCP Builder, Webapp Testing, Claude-Mem
-- **Designers** — UI UX Pro Max, Taste, Frontend Design, Transitions, Web Artifacts, Brand Guidelines
-- **Marketing** — 45 marketing skills → github.com/coreyhaines31/marketingskills
-- **Social Media** — 17 social skills → github.com/charlie947/social-media-skills
-- **Finance** — 8 finance skills → claude.com/plugins/finance
-- **Small Business** — 31 ops skills → claude.com/plugins/small-business
-- **Legal** — 9 legal skills → claude.com/plugins/legal
+**109 skills are installed** in `.claude/skills/` (cloned from the source repos) and owned per seat. Each owning subagent carries the `Skill` tool and can invoke them directly. Full mapping in [`.claude/skills/OWNERSHIP.md`](../skills/OWNERSHIP.md).
 
-Each seat's file lists its own skill links. Recommendations always cite real, installable skills.
+| Seat | Installed | Source |
+|---|---|---|
+| **Developers** | 38 | Superpowers, Context7, Skill Creator, MCP Builder, Webapp Testing, Claude-Mem |
+| **Designers** | 7 | UI UX Pro Max, Taste, Frontend Design, Transitions (×2), Web Artifacts, Brand Guidelines |
+| **Marketing** | 47 | coreyhaines31/marketingskills |
+| **Social Media** | 17 | charlie947/social-media-skills |
+
+**Three seats run on official Anthropic plugins** (knowledge-work-plugins marketplace), which live at the account level, not in this repo:
+
+| Seat | Status | Skills / commands |
+|---|---|---|
+| **Finance** | ✅ enabled | reconciliation, journal-entry, income-statement, variance-analysis, sox-testing, close-management |
+| **Legal** | ✅ enabled | review-contract, triage-nda, vendor-check, brief, legal-risk-assessment |
+| **Small Business** | ⚠️ available, enable in catalog | cash flow, payroll, invoicing, operations |
+
+Notes:
+- The Claude-Mem memory skills need the claude-mem backend installed separately to actually persist memory; the skill definitions are installed here regardless.
+- The plugin-backed seats (finance/legal/small-business) don't ship in git — they follow the account. To move the team to another account, re-enable those three plugins there.
 
 ## Scope & making it global
 
