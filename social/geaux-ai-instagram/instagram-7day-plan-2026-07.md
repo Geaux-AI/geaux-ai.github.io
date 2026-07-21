@@ -1,43 +1,43 @@
-# GEAUX AI — 7-Day Instagram Content Plan
+# GEAUX AI, 7-Day Instagram Content Plan
 **July 2026 | Ready-to-Post**
 
 ---
 
-## DAY 1: MONDAY — Introduction / Who We Are
+## DAY 1: MONDAY, Introduction / Who We Are
 
 **Pillar:** Brand & Mission  
 **Format:** Founder-style introduction post (pin this to your profile)  
-**Engagement Hook:** Clear identity + mission — tells people exactly who to follow and why
+**Engagement Hook:** Clear identity + mission, tells people exactly who to follow and why
 
 ### Hook
-"Meet GEAUX AI 👋 — we build the boring stuff so you can get back to the work that actually matters."
+"Meet GEAUX AI 👋, we build the boring stuff so you can get back to the work that actually matters."
 
 ### Caption
 Hi, we're **GEAUX AI**. 👋
 
-We build AI agents and simple automations for **small businesses and student organizations** — the tools that quietly handle the tedious, repetitive work nobody has time for.
+We build AI agents and simple automations for **small businesses and student organizations**, the tools that quietly handle the tedious, repetitive work nobody has time for.
 
 Think: bookkeeping that enters itself. Event sign-ups that track themselves. Dues and attendance that stop living in a group chat and a messy spreadsheet.
 
-**What we do:** you tell us the task that eats your week, and we build the right fix for it — an AI agent, an automation, a simple workflow, whatever fits. We prove it works, then hand it over so it's fully yours to keep.
+**What we do:** you tell us the task that eats your week, and we build the right fix for it, an AI agent, an automation, a simple workflow, whatever fits. We prove it works, then hand it over so it's fully yours to keep.
 
-**Who it's for:** people who *run* things, not people who write code. You don't need to be technical — that's the entire point.
+**Who it's for:** people who *run* things, not people who write code. You don't need to be technical, that's the entire point.
 
-**Our mission:** give small teams the same automation power the big companies have, so you can spend your time on your members, your customers, and your mission — instead of the busywork.
+**Our mission:** give small teams the same automation power the big companies have, so you can spend your time on your members, your customers, and your mission, instead of the busywork.
 
 Follow along for practical, no-jargon ways to automate your world.
 
 👇 Got one task that drives you crazy? Drop it in the comments and we'll tell you how we'd automate it.
 
 ### Visual Concept
-Clean brand intro card: GEAUX AI logo centered on brand colors (blue/white), tagline underneath — "AI agents & automation for small businesses & student orgs." Keep it warm and human — a friendly photo of you/the team works even better than a pure graphic. Optional second slide (carousel): a simple "you hand off the task → we build the agent → it's yours" three-step graphic.
+Clean brand intro card: GEAUX AI logo centered on brand colors (blue/white), tagline underneath, "AI agents & automation for small businesses & student orgs." Keep it warm and human, a friendly photo of you/the team works even better than a pure graphic. Optional second slide (carousel): a simple "you hand off the task → we build the agent → it's yours" three-step graphic.
 
 ### Hashtags
 #GeauxAI #AIAutomation #SmallBusiness #StudentOrgs #AIforBusiness
 
 ---
 
-## DAY 2: TUESDAY — Quick-Win Actions + Actionable
+## DAY 2: TUESDAY, Quick-Win Actions + Actionable
 
 **Pillar:** Quick-Win Actions  
 **Format:** 60-Second How-To  
@@ -68,7 +68,7 @@ Simple step-by-step phone screen mockups showing: 1) Google Form with green chec
 
 ---
 
-## DAY 3: WEDNESDAY — Education + Analytical
+## DAY 3: WEDNESDAY, Education + Analytical
 
 **Pillar:** Education  
 **Format:** "Why It Fails" Breakdown  
@@ -86,7 +86,7 @@ Here's what happens: a team picks a tool (Zapier, Make, whatever). Then they bui
 
 The win teams don't talk about: they document their workflow first. They ask: who does this? When? Why? What are the edge cases? Only then do they automate.
 
-Automation is just your process running without you. If your process is messy, automation makes it faster—and more broken.
+Automation is just your process running without you. If your process is messy, automation makes it faster, and more broken.
 
 Clean the path first. Then build the system.
 
@@ -98,7 +98,7 @@ Funnel diagram showing: messy process at top → automation tool in middle → f
 
 ---
 
-## DAY 4: THURSDAY — Tools & Resources + Listicle
+## DAY 4: THURSDAY, Tools & Resources + Listicle
 
 **Pillar:** Tools & Resources  
 **Format:** The Stack We Recommend  
@@ -132,7 +132,7 @@ Stacked cards layout showing each tool: Zapier card (blue), Make card (orange), 
 
 ---
 
-## DAY 5: FRIDAY — Workflow/Behind-the-Scenes + Analytical
+## DAY 5: FRIDAY, Workflow/Behind-the-Scenes + Analytical
 
 **Pillar:** Workflow  
 **Format:** How We Actually Build Agents  
@@ -168,7 +168,7 @@ Timeline showing 4 weeks with icons: Week 1 (speech bubble icon - interview), We
 
 ---
 
-## DAY 6: SATURDAY — Education + Contrarian
+## DAY 6: SATURDAY, Education + Contrarian
 
 **Pillar:** Education  
 **Format:** Rethink Common Advice  
@@ -202,7 +202,7 @@ Two paths shown: Left path shows "automate the annoying stuff" (time savings, sm
 
 ---
 
-## DAY 7: SUNDAY — Quick-Win Actions + Present vs Future
+## DAY 7: SUNDAY, Quick-Win Actions + Present vs Future
 
 **Pillar:** Quick-Win Actions  
 **Format:** 48-Hour Challenge  
@@ -267,7 +267,7 @@ Split screen or progression: Day 0 (person manually working, stressed face), Day
 - Monitor engagement Friday morning, adjust the next week if needed
 
 **Content swaps to rotate in:**
-- **The $2k invoicing case study** (moved off Day 1 to make room for the intro) — a strong Monday "Proof/Wins" post for week 2: a tax firm's bookkeeper spent 6 hrs/week filing invoices from email/text/forms; we built one agent that reads them and logs them to their accounting software → saved the equivalent of a part-time hire. Before/after visual.
+- **The $2k invoicing case study** (moved off Day 1 to make room for the intro), a strong Monday "Proof/Wins" post for week 2: a tax firm's bookkeeper spent 6 hrs/week filing invoices from email/text/forms; we built one agent that reads them and logs them to their accounting software → saved the equivalent of a part-time hire. Before/after visual.
 - Student org case studies (recruitment angle)
 - Tool comparisons (Zapier vs Make vs n8n, etc.)
 - Common automation mistakes (educational, higher engagement)
@@ -276,7 +276,7 @@ Split screen or progression: Day 0 (person manually working, stressed face), Day
 **Visual consistency:**
 - Use the same color palette (GEAUX AI brand colors)
 - Mix of mockups, before/after splits, timeline diagrams, and lifestyle/desk shots
-- Keep text on images minimal — let caption do the teaching
+- Keep text on images minimal, let caption do the teaching
 
 **Engagement workflow:**
 - Reply to every comment in first 2 hours (algorithm boost)

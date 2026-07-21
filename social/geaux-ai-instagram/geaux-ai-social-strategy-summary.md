@@ -1,21 +1,21 @@
-# GEAUX AI Social Strategy — Research + Tactics + 7-Day Plan
+# GEAUX AI Social Strategy, Research + Tactics + 7-Day Plan
 **July 2026**
 
 ---
 
 # 1. READY-TO-POST: 7-DAY INSTAGRAM CALENDAR
 
-**File:** `instagram-7day-plan-2026-07.md` — open this for all captions, hooks, visuals, and hashtags.
+**File:** `instagram-7day-plan-2026-07.md`, open this for all captions, hooks, visuals, and hashtags.
 
 **Quick reference:**
 
-- **Monday:** Invoice automation case study (Proof/Wins) — specific money saved
-- **Tuesday:** 60-second Google Form automation (Quick-Win) — try it now
-- **Wednesday:** Why automation fails (Education) — mind-shifting
-- **Thursday:** The recommended tech stack (Tools) — curated & trustworthy
-- **Friday:** Behind-the-scenes: how we build agents (Workflow) — transparency
-- **Saturday:** Rethink automation priority (Education contrarian) — money vs time
-- **Sunday:** 48-hour challenge (Quick-Win) — light urgency, motivational
+- **Monday:** Invoice automation case study (Proof/Wins), specific money saved
+- **Tuesday:** 60-second Google Form automation (Quick-Win), try it now
+- **Wednesday:** Why automation fails (Education), mind-shifting
+- **Thursday:** The recommended tech stack (Tools), curated & trustworthy
+- **Friday:** Behind-the-scenes: how we build agents (Workflow), transparency
+- **Saturday:** Rethink automation priority (Education contrarian), money vs time
+- **Sunday:** 48-hour challenge (Quick-Win), light urgency, motivational
 
 **To use immediately:**
 1. Copy each caption from the plan
@@ -119,11 +119,11 @@ Based on web research of the "AI automation / agents for small business & solopr
 
 These map to the 7-day plan but work as a repeating system:
 
-1. **Proof/Wins** (Monday) — Real client case studies, specific results, before/after
-2. **Quick-Win Actions** (Tuesday, Sunday) — 1-3 minute automations, permission-giving, exact steps
-3. **Education** (Wednesday, Saturday) — Teach a concept, analytical breakdowns, contrarian takes
-4. **Tools & Resources** (Thursday) — Curated stacks, comparisons, "here's what we recommend"
-5. **Workflow/Behind-the-Scenes** (Friday) — How GEAUX AI builds, transparency, messy middle
+1. **Proof/Wins** (Monday), Real client case studies, specific results, before/after
+2. **Quick-Win Actions** (Tuesday, Sunday), 1-3 minute automations, permission-giving, exact steps
+3. **Education** (Wednesday, Saturday), Teach a concept, analytical breakdowns, contrarian takes
+4. **Tools & Resources** (Thursday), Curated stacks, comparisons, "here's what we recommend"
+5. **Workflow/Behind-the-Scenes** (Friday), How GEAUX AI builds, transparency, messy middle
 
 **Rotation:** After week 1, repeat pillars with fresh examples. Swap in student org case studies, new tool reviews, different automation mistakes.
 
@@ -150,8 +150,8 @@ To keep this calendar running *without* you managing it daily:
 ### Medium: Engagement Tracking
 
 **What to measure (each week):**
-- Saves (most important — means people want to reference it later)
-- Shares (second — means they want to send it to someone)
+- Saves (most important, means people want to reference it later)
+- Shares (second, means they want to send it to someone)
 - Comments (community signal; less important than saves)
 - Link clicks (if you're driving to a landing page)
 
@@ -175,9 +175,9 @@ Each Instagram post can become:
 
 All files in `/home/user/geaux-ai.github.io/`:
 
-1. **`instagram-7day-plan-2026-07.md`** — Full 7-day calendar (captions, hooks, visuals, hashtags, notes for ongoing use)
-2. **`content-matrix-2026-07-21.md`** — 5 pillars × 8 formats (40 post ideas you can pull from anytime)
-3. **`geaux-ai-social-strategy-summary.md`** — This file (research + tactics + quick reference)
+1. **`instagram-7day-plan-2026-07.md`**, Full 7-day calendar (captions, hooks, visuals, hashtags, notes for ongoing use)
+2. **`content-matrix-2026-07-21.md`**, 5 pillars × 8 formats (40 post ideas you can pull from anytime)
+3. **`geaux-ai-social-strategy-summary.md`**, This file (research + tactics + quick reference)
 
 ---
 

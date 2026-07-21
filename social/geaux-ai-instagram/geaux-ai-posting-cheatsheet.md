@@ -1,8 +1,8 @@
-# GEAUX AI Instagram — Quick Reference & Posting Cheatsheet
+# GEAUX AI Instagram, Quick Reference & Posting Cheatsheet
 
 ## THIS WEEK'S 7 POSTS (Copy & Paste Ready)
 
-### MONDAY — Invoice Automation Case Study
+### MONDAY, Invoice Automation Case Study
 **Hook:** We just turned a client's invoicing chaos into an automated system. Here's the 3-step workflow that saved them $2k a month.
 
 **Visual:** Before/after split screen (messy emails left → clean spreadsheet right)
@@ -11,7 +11,7 @@
 
 ---
 
-### TUESDAY — 60-Second Google Form Fix
+### TUESDAY, 60-Second Google Form Fix
 **Hook:** You have a Google Form collecting customer info. Right now someone's copy-pasting it into a spreadsheet. Here's the 2-minute fix.
 
 **Visual:** 3 step-by-step phone screens (Form → Zapier → Sheets)
@@ -20,7 +20,7 @@
 
 ---
 
-### WEDNESDAY — Why Automation Fails
+### WEDNESDAY, Why Automation Fails
 **Hook:** Most automation projects fail within 3 months. We watched it happen 50 times. Here's the actual reason.
 
 **Visual:** Funnel chart (messy process → tool → failure) vs correct path (map first → tool → success)
@@ -29,7 +29,7 @@
 
 ---
 
-### THURSDAY — The Recommended Tech Stack
+### THURSDAY, The Recommended Tech Stack
 **Hook:** Every new client asks: what tools should we use? Here's our exact tech stack. $200/month total. Handles 80% of workflows.
 
 **Visual:** Stacked card layout showing 5 tools with logos, prices, descriptions
@@ -38,7 +38,7 @@
 
 ---
 
-### FRIDAY — Behind-the-Scenes: How We Build
+### FRIDAY, Behind-the-Scenes: How We Build
 **Hook:** Here's what you don't see when we build an AI agent for a client. The messy middle part.
 
 **Visual:** 4-week timeline showing progression from interview → build → fail → success
@@ -47,7 +47,7 @@
 
 ---
 
-### SATURDAY — Rethink Automation Priority
+### SATURDAY, Rethink Automation Priority
 **Hook:** Everyone says 'automate everything.' We're saying: automate the wrong thing and you'll regret it.
 
 **Visual:** Two-path comparison (automate annoying stuff vs automate revenue-blocking stuff) with right path highlighted
@@ -56,7 +56,7 @@
 
 ---
 
-### SUNDAY — 48-Hour Challenge
+### SUNDAY, 48-Hour Challenge
 **Hook:** In 48 hours, you could automate something your team does every single day. Here's proof.
 
 **Visual:** 3-panel progression (Day 0: manual work, stressed) → (Day 1: learning) → (Day 2: automated, relaxed)
@@ -105,7 +105,7 @@
 
 1. **Proof/Wins** (saves + shares highest)
 2. **Quick-Win Actions** (comments + engagement highest)
-3. **Education—Contrarian** (shares + controversy highest)
+3. **Education, Contrarian** (shares + controversy highest)
 4. **Behind-the-Scenes** (saves + curiosity highest)
 5. **Tools/Stack** (saves highest, medium comments)
 
@@ -181,9 +181,9 @@ If Monday's proof post gets 200 saves + 30 shares but Wednesday's education post
 
 ## FILES TO OPEN
 
-1. `instagram-7day-plan-2026-07.md` — Full captions + visual concepts + hashtags
-2. `content-matrix-2026-07-21.md` — 40 post ideas to rotate in
-3. `geaux-ai-social-strategy-summary.md` — Full research + strategy breakdown
+1. `instagram-7day-plan-2026-07.md`, Full captions + visual concepts + hashtags
+2. `content-matrix-2026-07-21.md`, 40 post ideas to rotate in
+3. `geaux-ai-social-strategy-summary.md`, Full research + strategy breakdown
 
 ---
 
