@@ -1,7 +1,7 @@
 ---
 name: orchestrator
 description: The team manager. Use this FIRST whenever someone brings a problem, an org request, or asks for a solution ("help my org", "how would you automate this", "what should I build"). It does not solve anything itself — it takes the request, splits it into slices, routes each slice to the right department specialist, then synthesizes every Solution Card into one recommendation framed as an agent, subagent, workflow, MCP server, or connector.
-tools: Read, Grep, Glob, WebSearch, WebFetch, TodoWrite
+tools: Read, Grep, Glob, WebSearch, WebFetch, TodoWrite, Agent
 model: opus
 ---
 
