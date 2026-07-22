@@ -90,23 +90,30 @@
   .team h2 em{font-style:italic;color:var(--accent);font-weight:500;}
   .team .sub{color:var(--ink-soft);max-width:50ch;margin:18px auto 0;font-size:16px;}
 
-  .chart{position:relative;margin:66px auto 0;max-width:960px;}
+  /* framed board, echoing the org-chart panel */
+  .board{position:relative;margin:56px auto 0;max-width:980px;border:1px solid var(--rule-strong);border-radius:22px;background:var(--paper-2);padding:42px 32px 46px;overflow:hidden;}
+  .board::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:36px 36px;opacity:.5;-webkit-mask-image:radial-gradient(120% 92% at 50% 2%,#000 32%,transparent 80%);mask-image:radial-gradient(120% 92% at 50% 2%,#000 32%,transparent 80%);pointer-events:none;}
+  .chart{position:relative;z-index:1;}
   .chart svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:1;}
   .wire{fill:none;stroke:var(--rule-strong);stroke-width:1.4;}
   .flow{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(182,102,42,.55));}
-  .node{position:relative;z-index:2;background:var(--paper-2);border:1px solid var(--rule-strong);border-radius:14px;padding:16px 12px;text-align:center;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;}
+  .node{position:relative;z-index:2;background:var(--paper);border:1px solid var(--rule-strong);border-radius:15px;padding:15px 12px;text-align:center;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;}
   .node .tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;}
-  .node .nm{font-family:'Fraunces',serif;font-weight:600;font-size:16px;margin-top:5px;}
-  .ceo{width:270px;max-width:80%;margin:0 auto;padding:20px 22px;border-color:var(--accent);box-shadow:0 0 0 4px rgba(182,102,42,.08);}
-  .ceo .tag{color:var(--accent);}
-  .ceo .nm{font-size:21px;margin-top:6px;}
-  .ceo .role{font-size:12.5px;color:var(--muted);margin-top:3px;}
-  .rowgap{height:150px;}
-  @media(max-width:680px){.rowgap{height:96px;}}
-  .depts{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;}
+  .node .nm{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;margin-top:3px;line-height:1.15;}
+  .avatar{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:var(--paper-2);border:1px solid var(--rule-strong);color:var(--ink-soft);margin:0 auto 9px;}
+  .avatar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round;}
+  .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper);background:var(--accent);padding:3px 11px;border-radius:20px;margin-bottom:11px;}
+  .ceo{width:258px;max-width:82%;margin:0 auto;padding:18px 22px 20px;border-color:var(--accent);box-shadow:0 14px 34px -20px rgba(182,102,42,.55),0 0 0 4px rgba(182,102,42,.07);}
+  .ceo .avatar{width:48px;height:48px;color:var(--accent);border-color:var(--accent);background:rgba(182,102,42,.09);}
+  .ceo .tag{color:var(--accent);margin-top:2px;}
+  .ceo .nm{font-size:20px;margin-top:2px;}
+  .ceo .role{font-size:12px;color:var(--muted);margin-top:3px;}
+  .rowgap{height:132px;}
+  @media(max-width:680px){.rowgap{height:104px;}}
+  .depts{display:grid;grid-template-columns:repeat(7,1fr);gap:11px;}
   .dept:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow);}
-  .dept.lit{border-color:var(--accent);box-shadow:0 0 0 3px rgba(182,102,42,.10);}
-  @media(max-width:680px){.depts{grid-template-columns:1fr 1fr;gap:14px 46px;}}
+  .dept:hover .avatar{color:var(--accent);border-color:var(--accent);}
+  @media(max-width:680px){.depts{grid-template-columns:1fr 1fr;gap:16px 40px;}.board{padding:32px 20px 36px;}}
 
   /* CONTACT */
   .contact{text-align:center;padding:88px 0;}
@@ -181,25 +188,29 @@
     <h2>Every problem enters at the top and <em>routes down</em> to the right person on my team.</h2>
     <p class="sub">One orchestrator reads your problem, splits it, and hands it to whoever owns it. Watch the signal travel.</p>
 
-    <div class="chart" id="chart">
-      <svg class="wires" id="wires" aria-hidden="true"></svg>
+    <div class="board">
+      <div class="chart" id="chart">
+        <svg class="wires" id="wires" aria-hidden="true"></svg>
 
-      <div class="node ceo" id="ceo">
-        <div class="tag">claude-code</div>
-        <div class="nm">Orchestrator</div>
-        <div class="role">routes every problem</div>
-      </div>
+        <div class="node ceo" id="ceo">
+          <span class="pill">CEO</span>
+          <span class="avatar"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="2.6"/><path d="M11 8.4V4.8M11 13.6v3.6M8.4 11H4.8M13.6 11h3.6"/><circle cx="11" cy="4" r="1.05"/><circle cx="11" cy="18" r="1.05"/><circle cx="4" cy="11" r="1.05"/><circle cx="18" cy="11" r="1.05"/></svg></span>
+          <div class="nm">Orchestrator</div>
+          <div class="tag">claude-code</div>
+          <div class="role">routes every problem</div>
+        </div>
 
-      <div class="rowgap"></div>
+        <div class="rowgap"></div>
 
-      <div class="depts" id="depts">
-        <div class="node dept"><div class="tag">Dev</div><div class="nm">Developers</div></div>
-        <div class="node dept"><div class="tag">Design</div><div class="nm">Designers</div></div>
-        <div class="node dept"><div class="tag">Growth</div><div class="nm">Marketing</div></div>
-        <div class="node dept"><div class="tag">Content</div><div class="nm">Social</div></div>
-        <div class="node dept"><div class="tag">Money</div><div class="nm">Finance</div></div>
-        <div class="node dept"><div class="tag">Ops</div><div class="nm">Operations</div></div>
-        <div class="node dept"><div class="tag">Legal</div><div class="nm">Legal</div></div>
+        <div class="depts" id="depts">
+          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M8 7l-4 4 4 4M14 7l4 4-4 4"/></svg></span><div class="nm">Developers</div><div class="tag">Dev</div></div>
+          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M4 18l1-3.6L14.4 5a1.5 1.5 0 012.1 0l.5.5a1.5 1.5 0 010 2.1L7.6 17 4 18z"/></svg></span><div class="nm">Designers</div><div class="tag">Design</div></div>
+          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M4 9v4h3l7 4V5L7 9H4z"/><path d="M16.4 8.8a3.4 3.4 0 010 4.4"/></svg></span><div class="nm">Marketing</div><div class="tag">Growth</div></div>
+          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><circle cx="6" cy="11" r="2"/><circle cx="15.5" cy="6" r="2"/><circle cx="15.5" cy="16" r="2"/><path d="M7.8 10l6-3M7.8 12l6 3"/></svg></span><div class="nm">Social</div><div class="tag">Content</div></div>
+          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="7"/><path d="M11 6.4v9.2M8.8 9.1a2 2 0 012-1.6h1a1.9 1.9 0 010 3.7h-1.4a1.9 1.9 0 000 3.7h1a2 2 0 002-1.6"/></svg></span><div class="nm">Finance</div><div class="tag">Money</div></div>
+          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="2.7"/><path d="M11 3.6v2.2M11 16.2v2.2M3.6 11h2.2M16.2 11h2.2M5.7 5.7l1.6 1.6M14.7 14.7l1.6 1.6M16.3 5.7l-1.6 1.6M7.3 14.7l-1.6 1.6"/></svg></span><div class="nm">Operations</div><div class="tag">Ops</div></div>
+          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M11 4v13M6.5 17h9"/><path d="M11 6L5.6 7.2 3.9 12a2.4 2.4 0 004.4 0L6.6 7.2M11 6l5.4 1.2L18.1 12a2.4 2.4 0 01-4.4 0l1.6-4.8"/></svg></span><div class="nm">Legal</div><div class="tag">Legal</div></div>
+        </div>
       </div>
     </div>
   </div>
