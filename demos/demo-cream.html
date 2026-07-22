@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geaux AI | AI Consulting & Automation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE4;
+    --paper-2:#FBF8F1;
+    --ink:#211E18;
+    --ink-soft:#463F35;
+    --muted:#8A8071;
+    --rule:#E3DACA;
+    --rule-strong:#D6CBB6;
+    --accent:#B6662A;
+    --accent-soft:#C67C3E;
+    --shadow:24px 30px 60px -34px rgba(58,44,24,.42);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:rgba(182,102,42,.22);}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}html{scroll-behavior:auto;}}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.015em;color:var(--ink);line-height:1.04;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:40;background:rgba(244,239,228,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+  .navrow{max-width:1080px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-family:'Fraunces',serif;font-weight:600;font-size:21px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;}
+  .brand .bdot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;}
+  .navlinks{display:flex;align-items:center;gap:30px;}
+  .navlinks a{font-size:13px;color:var(--ink-soft);transition:color .16s;}
+  .navlinks a:hover{color:var(--accent);}
+  .navcta{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--rule-strong);padding:9px 15px;border-radius:7px;transition:.16s;}
+  .navcta:hover{border-color:var(--accent);color:var(--accent);}
+  @media(max-width:720px){.navlinks a.hidesm{display:none;}.navlinks{gap:16px;}}
+
+  /* HERO / ABOUT */
+  .hero{padding:96px 0 34px;}
+  .hero .eyebrow{margin-bottom:22px;}
+  .hero h1{font-size:clamp(38px,6.6vw,72px);max-width:14ch;font-weight:600;}
+  .hero h1 em{font-style:italic;color:var(--accent);font-weight:500;}
+  .hero p{font-size:clamp(16px,2vw,19px);color:var(--ink-soft);max-width:52ch;margin-top:26px;}
+  .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;}
+  .btn{font-size:14.5px;font-weight:500;padding:13px 24px;border-radius:9px;transition:transform .16s,background .16s,border-color .16s;}
+  .btn-solid{background:var(--ink);color:var(--paper);}
+  .btn-solid:hover{transform:translateY(-2px);background:var(--accent);}
+  .btn-ghost{border:1px solid var(--rule-strong);color:var(--ink);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* SECTIONS */
+  section{padding:72px 0;}
+  .lead-label{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+  .lead-label .eyebrow{white-space:nowrap;}
+  .lead-label::after{content:"";height:1px;background:var(--rule);flex:1;}
+  .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:20px 64px;align-items:start;}
+  @media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:18px;}}
+  .about-grid h2{font-size:clamp(26px,3.6vw,38px);}
+  .about-copy p{color:var(--ink-soft);font-size:16.5px;}
+  .about-copy p + p{margin-top:16px;}
+
+  /* APPROACH */
+  .approach{background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:38px;border:1px solid var(--rule);border-radius:16px;overflow:hidden;background:var(--paper);}
+  @media(max-width:860px){.steps{grid-template-columns:1fr 1fr;}}
+  @media(max-width:520px){.steps{grid-template-columns:1fr;}}
+  .step{padding:28px 26px;border-right:1px solid var(--rule);}
+  .step:last-child{border-right:none;}
+  @media(max-width:860px){.step:nth-child(2){border-right:none;}.step:nth-child(1),.step:nth-child(2){border-bottom:1px solid var(--rule);}}
+  @media(max-width:520px){.step{border-right:none;border-bottom:1px solid var(--rule);}.step:last-child{border-bottom:none;}}
+  .step .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.1em;}
+  .step h3{font-size:20px;margin:12px 0 9px;font-weight:600;}
+  .step p{font-size:14px;color:var(--muted);line-height:1.55;}
+
+  /* TEAM / CHART */
+  .team{text-align:center;}
+  .team .lead-label{justify-content:center;}
+  .team .lead-label::after{display:none;}
+  .team .lead-label::before{content:"";height:1px;width:40px;background:var(--rule-strong);}
+  .team h2{font-size:clamp(27px,4vw,42px);max-width:16ch;margin:0 auto;}
+  .team h2 em{font-style:italic;color:var(--accent);font-weight:500;}
+  .team .sub{color:var(--ink-soft);max-width:50ch;margin:18px auto 0;font-size:16px;}
+
+  .chart{position:relative;margin:66px auto 0;max-width:960px;}
+  .chart svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:1;}
+  .wire{fill:none;stroke:var(--rule-strong);stroke-width:1.4;}
+  .flow{fill:none;stroke:var(--accent);stroke-width:2.6;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(182,102,42,.55));}
+  .node{position:relative;z-index:2;background:var(--paper-2);border:1px solid var(--rule-strong);border-radius:14px;padding:16px 12px;text-align:center;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;}
+  .node .tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;color:var(--muted);text-transform:uppercase;}
+  .node .nm{font-family:'Fraunces',serif;font-weight:600;font-size:16px;margin-top:5px;}
+  .ceo{width:270px;max-width:80%;margin:0 auto;padding:20px 22px;border-color:var(--accent);box-shadow:0 0 0 4px rgba(182,102,42,.08);}
+  .ceo .tag{color:var(--accent);}
+  .ceo .nm{font-size:21px;margin-top:6px;}
+  .ceo .role{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .rowgap{height:150px;}
+  @media(max-width:680px){.rowgap{height:96px;}}
+  .depts{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;}
+  .dept:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow);}
+  .dept.lit{border-color:var(--accent);box-shadow:0 0 0 3px rgba(182,102,42,.10);}
+  @media(max-width:680px){.depts{grid-template-columns:1fr 1fr;gap:14px 46px;}}
+
+  /* CONTACT */
+  .contact{text-align:center;padding:88px 0;}
+  .contact h2{font-size:clamp(27px,4vw,42px);max-width:18ch;margin:14px auto 0;}
+  .contact p{color:var(--ink-soft);max-width:48ch;margin:18px auto 26px;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--rule);padding:34px 0;}
+  .footrow{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center;}
+  .footrow .brand{font-size:18px;}
+  footer .meta{font-size:12.5px;color:var(--muted);}
+  .disclaim{max-width:1080px;margin:22px auto 0;padding:0 28px;font-size:11px;color:#A79C89;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navrow">
+    <a class="brand" href="#top"><span class="bdot"></span>Geaux AI</a>
+    <div class="navlinks">
+      <a class="hidesm" href="#about">What we do</a>
+      <a class="hidesm" href="#approach">Approach</a>
+      <a class="hidesm" href="#team">The team</a>
+      <a class="navcta" href="#start">Start a project</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap hero">
+    <div class="eyebrow">Geaux AI · AI consulting &amp; automation</div>
+    <h1>We start with your problem, then find the fix that <em>fits</em>.</h1>
+    <p>Tell us what slows you down. We look before we quote, and we build only what actually helps. Sometimes the answer is an AI agent. Sometimes it is a small script. We tell you which, and why.</p>
+    <div class="ctas">
+      <a class="btn btn-solid" href="#start">Start a project</a>
+      <a class="btn btn-ghost" href="#approach">See how it works</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="lead-label"><span class="eyebrow">About us</span></div>
+    <div class="about-grid">
+      <h2>What we do</h2>
+      <div class="about-copy">
+        <p>Geaux AI is a small consulting and automation practice. We help people put AI to work without the guesswork, and without buying tools they do not need.</p>
+        <p>You bring a task that eats your time. We figure out what it really is, pick the smallest thing that solves it, build it, and hand it over so you own it. No lock-in, no jargon, and no pressure to automate what is fine as it is.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="approach" class="approach">
+  <div class="wrap">
+    <div class="lead-label"><span class="eyebrow">Our approach</span></div>
+    <div class="about-grid">
+      <h2>Diagnose first. Recommend second.</h2>
+      <div class="about-copy">
+        <p>Think of us like any good service call. You tell us what is wrong, we look before we quote, and we only do the work that fixes it. The order matters, so the problem always comes before the tool.</p>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Diagnose</h3><p>We understand the real problem in plain language before anything gets proposed.</p></div>
+      <div class="step"><div class="num">02</div><h3>Delegate</h3><p>We route it to whoever on our team knows that domain best.</p></div>
+      <div class="step"><div class="num">03</div><h3>Right-fit</h3><p>We pick the smallest fix that works. An agent, a workflow, or something simpler.</p></div>
+      <div class="step"><div class="num">04</div><h3>Hand off</h3><p>We build it, prove it works, and hand it to you to keep. No lock-in.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="team" class="team">
+  <div class="wrap">
+    <div class="lead-label"><span class="eyebrow">One orchestrator, seven specialists</span></div>
+    <h2>Every problem enters at the top and <em>routes down</em> to the specialist that owns it.</h2>
+    <p class="sub">The orchestrator reads your problem, splits it, and feeds it down the line to the right seat. Watch the signal travel.</p>
+
+    <div class="chart" id="chart">
+      <svg class="wires" id="wires" aria-hidden="true"></svg>
+
+      <div class="node ceo" id="ceo">
+        <div class="tag">claude-code</div>
+        <div class="nm">Orchestrator</div>
+        <div class="role">routes every problem</div>
+      </div>
+
+      <div class="rowgap"></div>
+
+      <div class="depts" id="depts">
+        <div class="node dept"><div class="tag">Dev</div><div class="nm">Developers</div></div>
+        <div class="node dept"><div class="tag">Design</div><div class="nm">Designers</div></div>
+        <div class="node dept"><div class="tag">Growth</div><div class="nm">Marketing</div></div>
+        <div class="node dept"><div class="tag">Content</div><div class="nm">Social</div></div>
+        <div class="node dept"><div class="tag">Money</div><div class="nm">Finance</div></div>
+        <div class="node dept"><div class="tag">Ops</div><div class="nm">Operations</div></div>
+        <div class="node dept"><div class="tag">Legal</div><div class="nm">Legal</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start" class="contact">
+  <div class="wrap">
+    <div class="eyebrow">Start here</div>
+    <h2>Tell us what is eating your time.</h2>
+    <p>The business, the side project, whatever you keep doing by hand. Describe it in plain language and we will tell you straight, even if the answer is that you do not need us for this. The first conversation is free.</p>
+    <div class="ctas" style="justify-content:center;">
+      <a class="btn btn-solid" href="https://docs.google.com/forms/d/e/1FAIpQLScx9KQ1XdFSqgvarcvlmtizK7QEaAQ1zyc7_BApvU2v-g2xCQ/viewform" target="_blank" rel="noopener">Tell us your problem</a>
+      <a class="btn btn-ghost" href="https://instagram.com/geaux.ai" target="_blank" rel="noopener">@geaux.ai</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footrow">
+    <a class="brand" href="#top"><span class="bdot"></span>Geaux AI</a>
+    <div class="meta">Baton Rouge, LA · geauxai2026@gmail.com · @geaux.ai</div>
+  </div>
+  <div class="disclaim">Geaux AI is an independent AI consulting practice, not affiliated with or endorsed by Louisiana State University. Every solution is delivered with human review and accepted by the client before it ships.</div>
+</footer>
+
+<script>
+(function(){
+  var chart = document.getElementById('chart');
+  var wires = document.getElementById('wires');
+  var ceo   = document.getElementById('ceo');
+  var depts = Array.prototype.slice.call(document.querySelectorAll('#depts .dept'));
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var wireEls = [], flowEls = [], flowAnims = [], nodeAnims = [];
+
+  depts.forEach(function(){
+    var w = document.createElementNS(SVGNS,'path'); w.setAttribute('class','wire'); wires.appendChild(w); wireEls.push(w);
+  });
+  depts.forEach(function(){
+    var f = document.createElementNS(SVGNS,'path'); f.setAttribute('class','flow'); f.style.opacity='0'; wires.appendChild(f); flowEls.push(f);
+  });
+
+  // Recompute geometry only. Resting wires stay solid and always visible;
+  // only the comet + node bloom animate, so resize/reflow never hides lines.
+  function layout(){
+    var cb = chart.getBoundingClientRect();
+    wires.setAttribute('viewBox','0 0 '+cb.width+' '+cb.height);
+    var o = ceo.getBoundingClientRect();
+    var ox = o.left + o.width/2 - cb.left;
+    var oy = o.bottom - cb.top;
+    depts.forEach(function(n,i){
+      var r = n.getBoundingClientRect();
+      var nx = r.left + r.width/2 - cb.left;
+      var ny = r.top - cb.top;
+      var my = oy + (ny-oy)*0.5;
+      var d = 'M '+ox+' '+oy+' C '+ox+' '+my+', '+nx+' '+my+', '+nx+' '+ny;
+      wireEls[i].setAttribute('d', d);
+      flowEls[i].setAttribute('d', d);
+      flowEls[i].dataset.len = flowEls[i].getTotalLength();
+    });
+    startFlow();
+  }
+
+  function startFlow(){
+    flowAnims.forEach(function(a){a && a.cancel();});
+    nodeAnims.forEach(function(a){a && a.cancel();});
+    flowAnims = []; nodeAnims = [];
+    if(reduce){ return; }
+    depts.forEach(function(n,i){
+      var len = parseFloat(flowEls[i].dataset.len)||0;
+      var seg = Math.max(30, len*0.14);
+      flowEls[i].style.strokeDasharray = seg+' '+(len+seg);
+      flowEls[i].style.opacity='1';
+      flowAnims[i]=flowEls[i].animate(
+        [{strokeDashoffset:0, opacity:0, offset:0},
+         {opacity:1, offset:0.10},
+         {opacity:1, offset:0.80},
+         {strokeDashoffset:-len, opacity:0, offset:1}],
+        {duration:2600, delay:i*230, iterations:Infinity, easing:'cubic-bezier(.42,0,.4,1)'}
+      );
+      nodeAnims[i]=n.animate(
+        [{boxShadow:'0 0 0 0 rgba(182,102,42,0)', offset:0},
+         {boxShadow:'0 0 0 0 rgba(182,102,42,0)', offset:0.70},
+         {boxShadow:'0 0 0 3px rgba(182,102,42,.30)', offset:0.88},
+         {boxShadow:'0 0 0 0 rgba(182,102,42,0)', offset:1}],
+        {duration:2600, delay:i*230, iterations:Infinity, easing:'ease-out'}
+      );
+    });
+  }
+
+  // hover spotlight
+  depts.forEach(function(n,i){
+    n.addEventListener('mouseenter',function(){
+      wireEls.forEach(function(w,j){ w.style.opacity = j===i?'1':'0.28'; flowEls[j].style.opacity=j===i?'':'0.12'; });
+      wireEls[i].style.stroke='var(--accent)';
+    });
+    n.addEventListener('mouseleave',function(){
+      wireEls.forEach(function(w){ w.style.opacity='1'; w.style.stroke=''; });
+      flowEls.forEach(function(f){ f.style.opacity=''; });
+    });
+  });
+
+  var rAF;
+  window.addEventListener('resize',function(){ cancelAnimationFrame(rAF); rAF=requestAnimationFrame(layout); });
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(layout); }
+  window.addEventListener('load', layout);
+  layout();
+})();
+</script>
+</body>
+</html>
