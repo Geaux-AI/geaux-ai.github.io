@@ -173,8 +173,8 @@
 
 <script>
 (function(){
-  // Paste the Apps Script Web App /exec URL here once it is deployed:
-  var ENDPOINT = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
+  // Submissions are emailed to geauxai2026 via FormSubmit (free relay, no account).
+  var ENDPOINT = 'https://formsubmit.co/ajax/geauxai2026@gmail.com';
 
   var form = document.getElementById('intake');
   var btn  = document.getElementById('sendBtn');
@@ -191,17 +191,26 @@
     var email = form.elements['email'].value.trim();
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ form.elements['email'].focus(); note.textContent='That email does not look right.'; note.style.color='var(--accent)'; return; }
 
-    var data = new URLSearchParams();
-    ['name','email','role','problem','frequency','solved','tools','constraints'].forEach(function(k){ data.append(k, (form.elements[k]||{}).value || ''); });
-    var areas = Array.prototype.slice.call(form.querySelectorAll('input[name=areas]:checked')).map(function(c){return c.value;});
-    data.append('areas', areas.join(', '));
-
-    if(ENDPOINT.indexOf('PASTE_') === 0){
-      note.textContent='Form is not connected to its inbox yet.'; note.style.color='var(--accent)'; return;
-    }
+    var val = function(k){ return ((form.elements[k] && form.elements[k].value) || '').trim(); };
+    var areas = Array.prototype.slice.call(form.querySelectorAll('input[name=areas]:checked')).map(function(c){return c.value;}).join(', ');
+    var payload = {
+      _subject: 'New Geaux AI intake — ' + val('name'),
+      _template: 'table',
+      _captcha: 'false',
+      Name: val('name'),
+      Email: val('email'),
+      'What they do': val('role'),
+      Problem: val('problem'),
+      'Frequency / effort': val('frequency'),
+      'Solved looks like': val('solved'),
+      'Tools today': val('tools'),
+      Areas: areas,
+      Constraints: val('constraints')
+    };
 
     btn.disabled = true; btn.textContent='Sending…'; note.textContent=''; note.style.color='';
-    fetch(ENDPOINT, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() })
+    fetch(ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body:JSON.stringify(payload) })
+      .then(function(r){ return r.json().catch(function(){return {};}); })
       .then(function(){ form.style.display='none'; document.getElementById('done').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); })
       .catch(function(){ btn.disabled=false; btn.textContent='Send it'; note.textContent='Something went wrong. Please try again, or email geauxai2026@gmail.com.'; note.style.color='var(--accent)'; });
   });
