@@ -76,23 +76,53 @@
   .oc-account .oc-label{font-family:'Fraunces',serif;font-weight:600;font-size:18px;font-style:italic;}
   .oc-account .oc-sub{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;opacity:.85;}
   .oc-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
-  .oc-line{fill:none;stroke:var(--rule-strong);stroke-width:1.4;}
-  .oc-pulse{fill:var(--indigo);}
+  .oc-branch{transition:opacity .25s ease;}
+  .oc-line{fill:none;stroke:var(--rule-strong);stroke-width:1.4;stroke-linecap:round;
+    stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+    animation:oc-draw 1s cubic-bezier(.6,.05,.2,1) forwards;animation-delay:var(--draw-delay);}
+  .oc-flow{fill:none;stroke:var(--indigo);stroke-width:2.2;stroke-linecap:round;opacity:0;
+    stroke-dasharray:var(--seg) 999999;
+    filter:drop-shadow(0 0 3px var(--indigo));
+    animation:oc-flow 2.8s linear infinite;animation-delay:var(--flow-delay);}
+  @keyframes oc-draw{to{stroke-dashoffset:0;}}
+  @keyframes oc-flow{
+    0%{stroke-dashoffset:calc(var(--seg) + var(--len));opacity:0;}
+    4%{opacity:1;}
+    46%{stroke-dashoffset:0;opacity:1;}
+    56%{opacity:0;}
+    100%{stroke-dashoffset:0;opacity:0;}
+  }
   .oc-rows{margin-top:96px;position:relative;z-index:2;border-top:1px solid var(--rule);}
-  .oc-row{display:flex;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--rule);background:var(--paper);}
+  .oc-row{display:flex;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--rule);background:var(--paper);cursor:default;
+    transition:transform .2s ease,opacity .2s ease;
+    animation:oc-post 2.8s ease-in-out infinite;animation-delay:var(--flow-delay);}
   .oc-row .oc-num{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);width:34px;flex-shrink:0;}
   .oc-row .oc-label{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;flex-grow:1;}
-  .oc-row .oc-status{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
-  .oc-row .oc-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule-strong);flex-shrink:0;position:relative;transition:border-color .2s ease, background .2s ease;}
-  .oc-row .oc-check::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;border-right:2px solid transparent;border-bottom:2px solid transparent;transform:rotate(40deg);transition:border-color .2s ease;}
-  .oc-row.oc-lit{background:#EDF0FA;}
-  .oc-row.oc-lit .oc-status{color:var(--verify);}
-  .oc-row.oc-lit .oc-check{border-color:var(--verify);background:var(--verify);}
-  .oc-row.oc-lit .oc-check::after{border-color:#fff;}
+  .oc-row .oc-status{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+    animation:oc-statuscolor 2.8s ease-in-out infinite;animation-delay:var(--flow-delay);}
+  .oc-row .oc-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule-strong);flex-shrink:0;position:relative;
+    animation:oc-check 2.8s ease-in-out infinite;animation-delay:var(--flow-delay);}
+  .oc-row .oc-check::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;border-right:2px solid transparent;border-bottom:2px solid transparent;transform:rotate(40deg);
+    animation:oc-checktick 2.8s ease-in-out infinite;animation-delay:var(--flow-delay);}
+  @keyframes oc-post{0%,40%{background:var(--paper);}50%,62%{background:#EDF0FA;}72%,100%{background:var(--paper);}}
+  @keyframes oc-check{0%,40%{border-color:var(--rule-strong);background:var(--paper);}50%,62%{border-color:var(--verify);background:var(--verify);}72%,100%{border-color:var(--rule-strong);background:var(--paper);}}
+  @keyframes oc-checktick{0%,40%{border-color:transparent;}50%,62%{border-color:#fff;}72%,100%{border-color:transparent;}}
+  @keyframes oc-statuscolor{0%,40%{color:var(--muted);}50%,62%{color:var(--verify);}72%,100%{color:var(--muted);}}
+  .oc-row:hover,.oc-row:focus-visible,.oc-row.is-active{transform:translateX(4px);animation-play-state:paused;background:#EDF0FA;}
+  .oc-row:hover .oc-status,.oc-row:focus-visible .oc-status,.oc-row.is-active .oc-status{color:var(--verify);}
+  .oc-row:hover .oc-check,.oc-row:focus-visible .oc-check,.oc-row.is-active .oc-check{border-color:var(--verify);background:var(--verify);}
+  .oc-row:hover .oc-check::after,.oc-row:focus-visible .oc-check::after,.oc-row.is-active .oc-check::after{border-color:#fff;}
+  .orgchart[data-active] .oc-row:not(.is-active){opacity:.45;}
+  .orgchart[data-active] .oc-branch{opacity:.14;}
+  .orgchart[data-active] .oc-branch.is-on{opacity:1;}
   @media(max-width:640px){
     .oc-rows{margin-top:74px;}
     .oc-row .oc-status{display:none;}
     .oc-account{flex-direction:column;align-items:flex-start;gap:4px;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .oc-line{stroke-dashoffset:0;}
+    .oc-flow{display:none;}
   }
 
   /* SUMMARY STRIP */
@@ -188,21 +218,21 @@
       <a class="btn btn-ghost" href="#method">See how it's routed</a>
     </div>
 
-    <div class="orgchart" id="orgchart">
+    <div class="orgchart" id="orgchart" role="img" aria-label="Org chart. The orchestrator, claude-code, routes every entry to seven departments: Developers, Designers, Marketing, Social, Finance, Operations, and Legal.">
       <p class="oc-caption">How an entry moves through the ledger</p>
-      <div class="oc-account">
+      <div class="oc-account" tabindex="0" aria-label="The Orchestrator, claude-code, opens every file">
         <span class="oc-label">The Orchestrator</span>
         <span class="oc-sub mono">claude&#8209;code</span>
       </div>
       <svg class="oc-svg" aria-hidden="true"></svg>
       <div class="oc-rows">
-        <div class="oc-row" data-dept="dev"><span class="oc-num">01</span><span class="oc-label">Developers</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
-        <div class="oc-row" data-dept="design"><span class="oc-num">02</span><span class="oc-label">Designers</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
-        <div class="oc-row" data-dept="mktg"><span class="oc-num">03</span><span class="oc-label">Marketing</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
-        <div class="oc-row" data-dept="social"><span class="oc-num">04</span><span class="oc-label">Social</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
-        <div class="oc-row" data-dept="fin"><span class="oc-num">05</span><span class="oc-label">Finance</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
-        <div class="oc-row" data-dept="ops"><span class="oc-num">06</span><span class="oc-label">Operations</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
-        <div class="oc-row" data-dept="legal"><span class="oc-num">07</span><span class="oc-label">Legal</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+        <div class="oc-row" tabindex="0" data-dept="dev" aria-label="Developers, routed"><span class="oc-num">01</span><span class="oc-label">Developers</span><span class="oc-status">Routed</span><span class="oc-check"></span></div>
+        <div class="oc-row" tabindex="0" data-dept="design" aria-label="Designers, routed"><span class="oc-num">02</span><span class="oc-label">Designers</span><span class="oc-status">Routed</span><span class="oc-check"></span></div>
+        <div class="oc-row" tabindex="0" data-dept="mktg" aria-label="Marketing, routed"><span class="oc-num">03</span><span class="oc-label">Marketing</span><span class="oc-status">Routed</span><span class="oc-check"></span></div>
+        <div class="oc-row" tabindex="0" data-dept="social" aria-label="Social, routed"><span class="oc-num">04</span><span class="oc-label">Social</span><span class="oc-status">Routed</span><span class="oc-check"></span></div>
+        <div class="oc-row" tabindex="0" data-dept="fin" aria-label="Finance, routed"><span class="oc-num">05</span><span class="oc-label">Finance</span><span class="oc-status">Routed</span><span class="oc-check"></span></div>
+        <div class="oc-row" tabindex="0" data-dept="ops" aria-label="Operations, routed"><span class="oc-num">06</span><span class="oc-label">Operations</span><span class="oc-status">Routed</span><span class="oc-check"></span></div>
+        <div class="oc-row" tabindex="0" data-dept="legal" aria-label="Legal, routed"><span class="oc-num">07</span><span class="oc-label">Legal</span><span class="oc-status">Routed</span><span class="oc-check"></span></div>
       </div>
     </div>
   </div>
@@ -378,112 +408,86 @@
   const svg = root.querySelector('.oc-svg');
   const account = root.querySelector('.oc-account');
   const rows = [...root.querySelectorAll('.oc-rows .oc-row')];
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const SVGNS = 'http://www.w3.org/2000/svg';
-  let entries = [];
-  let raf = null;
+  const STAGGER = 0.28;
+  let branches = [];
 
-  function pt(el, edge){
+  function pt(el, edge, base){
     const r = el.getBoundingClientRect();
-    const cr = root.getBoundingClientRect();
-    const x = edge === 'bottom' ? r.left + 40 - cr.left : r.left + 4 - cr.left;
-    const y = (edge === 'bottom' ? r.bottom : r.top + r.height/2) - cr.top;
+    const x = edge === 'bottom' ? r.left + 40 - base.left : r.left + 4 - base.left;
+    const y = (edge === 'bottom' ? r.bottom : r.top + r.height/2) - base.top;
     return {x,y};
   }
 
-  function build(){
+  function layout(){
+    const base = root.getBoundingClientRect();
     svg.setAttribute('viewBox', `0 0 ${root.clientWidth} ${root.clientHeight}`);
     svg.innerHTML = '';
-    entries = [];
-    const start = pt(account, 'bottom');
+    branches = [];
+    const start = pt(account, 'bottom', base);
+    const frag = document.createDocumentFragment();
+
     rows.forEach((row, i) => {
-      const end = pt(row, 'top');
+      const end = pt(row, 'top', base);
       const midY = start.y + (end.y - start.y) * 0.4;
       const d = `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`;
-      const path = document.createElementNS(SVGNS, 'path');
-      path.setAttribute('d', d);
-      path.setAttribute('class', 'oc-line');
-      svg.appendChild(path);
-      const len = path.getTotalLength();
-      path.style.strokeDasharray = len;
-      path.style.strokeDashoffset = reduce ? 0 : len;
 
-      const pulse = document.createElementNS(SVGNS, 'circle');
-      pulse.setAttribute('r', '3');
-      pulse.setAttribute('class', 'oc-pulse');
-      pulse.style.opacity = '0';
-      svg.appendChild(pulse);
+      const g = document.createElementNS(SVGNS, 'g');
+      g.setAttribute('class', 'oc-branch');
+      g.style.setProperty('--draw-delay', (0.1 + i * 0.08).toFixed(2) + 's');
+      g.style.setProperty('--flow-delay', (1.0 + i * STAGGER).toFixed(2) + 's');
+      g.style.setProperty('--seg', '40');
 
-      entries.push({path, len, pulse, row, drawDelay: i * 80, drawDur: 560});
+      const line = document.createElementNS(SVGNS, 'path');
+      line.setAttribute('d', d);
+      line.setAttribute('class', 'oc-line');
+      const flow = document.createElementNS(SVGNS, 'path');
+      flow.setAttribute('d', d);
+      flow.setAttribute('class', 'oc-flow');
+
+      g.appendChild(line);
+      g.appendChild(flow);
+      frag.appendChild(g);
+      branches.push(g);
+
+      row.style.setProperty('--flow-delay', (1.0 + i * STAGGER).toFixed(2) + 's');
+
+      requestAnimationFrame(() => {
+        const len = line.getTotalLength();
+        g.style.setProperty('--len', len.toFixed(1));
+      });
     });
+
+    svg.appendChild(frag);
   }
 
-  function drawIn(t0){
-    function frame(t){
-      const elapsed = t - t0;
-      let allDone = true;
-      entries.forEach(e => {
-        const local = elapsed - e.drawDelay;
-        if(local < 0){ allDone = false; return; }
-        const p = Math.min(1, local / e.drawDur);
-        e.path.style.strokeDashoffset = String(e.len * (1 - p));
-        if(p < 1) allDone = false;
-      });
-      if(!allDone){ requestAnimationFrame(frame); }
-      else { startPulses(); }
-    }
-    requestAnimationFrame(frame);
+  function activate(i){
+    root.dataset.active = i;
+    rows.forEach((r,k) => r.classList.toggle('is-active', k===i));
+    branches.forEach((b,k) => b.classList.toggle('is-on', k===i));
   }
-
-  function startPulses(){
-    function loop(t){
-      entries.forEach((e, i) => {
-        const cycle = 2800;
-        const offset = i * 300;
-        const local = (t + offset) % cycle;
-        const p = local / cycle;
-        if(p < 0.5){
-          const pos = e.path.getPointAtLength(e.len * (p / 0.5));
-          e.pulse.setAttribute('cx', pos.x);
-          e.pulse.setAttribute('cy', pos.y);
-          e.pulse.style.opacity = '1';
-        } else if(p < 0.55){
-          e.pulse.style.opacity = '0';
-          e.row.classList.add('oc-lit');
-        } else if(p > 0.88){
-          e.row.classList.remove('oc-lit');
-        }
-      });
-      raf = requestAnimationFrame(loop);
-    }
-    raf = requestAnimationFrame(loop);
+  function clearActive(){
+    delete root.dataset.active;
+    rows.forEach(r => r.classList.remove('is-active'));
+    branches.forEach(b => b.classList.remove('is-on'));
   }
-
-  function init(){
-    build();
-    if(reduce){
-      rows.forEach(r => r.classList.add('oc-lit'));
-    } else {
-      requestAnimationFrame(t => drawIn(t));
-    }
-  }
-
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      if(raf) cancelAnimationFrame(raf);
-      build();
-      if(reduce){ rows.forEach(r => r.classList.add('oc-lit')); }
-      else { startPulses(); }
-    }, 150);
+  rows.forEach((r,i) => {
+    r.addEventListener('mouseenter', () => activate(i));
+    r.addEventListener('mouseleave', clearActive);
+    r.addEventListener('focus', () => activate(i));
+    r.addEventListener('blur', clearActive);
   });
 
-  if(document.fonts && document.fonts.ready){
-    document.fonts.ready.then(init);
-  } else {
-    init();
+  let raf = null;
+  function schedule(){
+    if(raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(layout);
   }
+  if(window.ResizeObserver){ new ResizeObserver(schedule).observe(root); }
+  else { window.addEventListener('resize', schedule); }
+
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(schedule); }
+  requestAnimationFrame(() => requestAnimationFrame(layout));
 })();
 </script>
 
