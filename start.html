@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" href="assets/logo.png">
+<title>Start a project — Geaux AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE4; --paper-2:#FBF8F1; --ink:#211E18; --ink-soft:#463F35;
+    --muted:#8A8071; --rule:#E3DACA; --rule-strong:#D6CBB6; --accent:#B6662A; --accent-soft:#C67C3E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:'Inter',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:rgba(182,102,42,.22);}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+  h1{font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.015em;line-height:1.05;}
+
+  nav{position:sticky;top:0;z-index:40;background:rgba(244,239,228,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+  .navrow{max-width:760px;margin:0 auto;padding:0 24px;height:66px;display:flex;align-items:center;justify-content:space-between;}
+  .brand{font-family:'Fraunces',serif;font-weight:600;font-size:21px;display:flex;align-items:center;gap:10px;}
+  .brand .blogo{width:27px;height:27px;object-fit:contain;}
+  .backlink{font-size:13px;color:var(--ink-soft);}
+  .backlink:hover{color:var(--accent);}
+
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  header.top{padding:64px 0 8px;}
+  header.top .eyebrow{margin-bottom:18px;}
+  header.top h1{font-size:clamp(32px,5.5vw,52px);}
+  header.top h1 em{font-style:italic;color:var(--accent);font-weight:500;}
+  header.top p{color:var(--ink-soft);font-size:17px;max-width:52ch;margin-top:18px;}
+
+  form{margin:44px 0 80px;display:flex;flex-direction:column;gap:26px;}
+  .field{display:flex;flex-direction:column;gap:8px;}
+  .field label{font-size:15px;font-weight:600;color:var(--ink);}
+  .field .hint{font-size:13px;color:var(--muted);font-weight:400;}
+  .field .req{color:var(--accent);}
+  input[type=text],input[type=email],textarea{
+    font-family:inherit;font-size:15.5px;color:var(--ink);background:var(--paper-2);
+    border:1px solid var(--rule-strong);border-radius:11px;padding:13px 15px;width:100%;transition:border-color .15s,box-shadow .15s;
+  }
+  textarea{min-height:110px;resize:vertical;line-height:1.55;}
+  input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(182,102,42,.12);}
+  input::placeholder,textarea::placeholder{color:#B3A996;}
+
+  .checks{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 18px;}
+  @media(max-width:520px){.checks{grid-template-columns:1fr;}}
+  .check{display:flex;align-items:center;gap:9px;font-size:14.5px;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--rule);border-radius:10px;padding:10px 13px;cursor:pointer;transition:border-color .15s,background .15s;}
+  .check:hover{border-color:var(--rule-strong);}
+  .check input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;}
+  .check:has(input:checked){border-color:var(--accent);background:rgba(182,102,42,.06);}
+
+  .submit{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px;}
+  button.send{font-family:inherit;font-size:15px;font-weight:600;color:var(--paper);background:var(--ink);border:none;border-radius:10px;padding:14px 30px;cursor:pointer;transition:background .16s,transform .16s;}
+  button.send:hover{background:var(--accent);transform:translateY(-1px);}
+  button.send:disabled{opacity:.55;cursor:default;transform:none;}
+  .note{font-size:13px;color:var(--muted);}
+
+  .done{display:none;margin:44px 0 90px;padding:40px 34px;background:var(--paper-2);border:1px solid var(--rule-strong);border-radius:16px;text-align:center;}
+  .done h2{font-family:'Fraunces',serif;font-weight:600;font-size:28px;color:var(--ink);}
+  .done p{color:var(--ink-soft);margin:12px auto 0;max-width:44ch;}
+  .done a{color:var(--accent);font-weight:600;}
+
+  footer{border-top:1px solid var(--rule);padding:30px 0;}
+  .footrow{max-width:760px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;}
+  .footrow .brand{font-size:18px;}
+  .footrow .brand .blogo{width:22px;height:22px;}
+  footer .meta{font-size:12.5px;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="navrow">
+    <a class="brand" href="index.html"><img class="blogo" src="assets/logo.png" alt="Geaux AI logo">Geaux AI</a>
+    <a class="backlink" href="index.html">&larr; Back to site</a>
+  </div>
+</nav>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">Start a project</div>
+    <h1>Tell us what's <em>eating your time</em>.</h1>
+    <p>Answer a few questions in plain language. We read every one, diagnose the real problem, and get back to you, even if the answer is that you do not need us for this. Takes about three minutes.</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <form id="intake" novalidate>
+    <div class="field">
+      <label for="name">Your name <span class="req">*</span></label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="field">
+      <label for="email">Email <span class="req">*</span></label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com">
+    </div>
+
+    <div class="field">
+      <label for="role">What do you do? <span class="req">*</span></label>
+      <span class="hint">Your business, role, or project.</span>
+      <input type="text" id="role" name="role" required>
+    </div>
+
+    <div class="field">
+      <label for="problem">What's the problem? <span class="req">*</span></label>
+      <span class="hint">The task or headache that eats your time, in plain language.</span>
+      <textarea id="problem" name="problem" required></textarea>
+    </div>
+
+    <div class="field">
+      <label for="frequency">How often does it happen, and how long does it take each time? <span class="req">*</span></label>
+      <input type="text" id="frequency" name="frequency" required placeholder="e.g. every week, a few hours each time">
+    </div>
+
+    <div class="field">
+      <label for="solved">What would "solved" look like for you? <span class="req">*</span></label>
+      <textarea id="solved" name="solved" required></textarea>
+    </div>
+
+    <div class="field">
+      <label for="tools">What tools do you use for this today?</label>
+      <span class="hint">Gmail, Google Sheets, Instagram, QuickBooks, or nothing yet.</span>
+      <input type="text" id="tools" name="tools">
+    </div>
+
+    <div class="field">
+      <label>Which areas does it touch? <span class="hint" style="font-weight:400;">(pick any, or leave blank)</span></label>
+      <div class="checks">
+        <label class="check"><input type="checkbox" name="areas" value="Building / tech">Building / tech</label>
+        <label class="check"><input type="checkbox" name="areas" value="Design">Design</label>
+        <label class="check"><input type="checkbox" name="areas" value="Marketing">Marketing</label>
+        <label class="check"><input type="checkbox" name="areas" value="Social">Social</label>
+        <label class="check"><input type="checkbox" name="areas" value="Money / finance">Money / finance</label>
+        <label class="check"><input type="checkbox" name="areas" value="Operations">Operations</label>
+        <label class="check"><input type="checkbox" name="areas" value="Legal">Legal</label>
+        <label class="check"><input type="checkbox" name="areas" value="Not sure">Not sure</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="constraints">Any hard constraints?</label>
+      <span class="hint">Deadline, budget, or private / sensitive data.</span>
+      <input type="text" id="constraints" name="constraints">
+    </div>
+
+    <div class="submit">
+      <button type="submit" class="send" id="sendBtn">Send it</button>
+      <span class="note" id="formNote">We reply to the email you give us.</span>
+    </div>
+  </form>
+
+  <div class="done" id="done">
+    <h2>Got it. Thank you.</h2>
+    <p>Your problem is in front of us. We'll read it, figure out the right-sized fix, and reach out at the email you gave us. <a href="index.html">Back to the site &rarr;</a></p>
+  </div>
+</div>
+
+<footer>
+  <div class="footrow">
+    <a class="brand" href="index.html"><img class="blogo" src="assets/logo.png" alt="Geaux AI logo">Geaux AI</a>
+    <div class="meta">Baton Rouge, LA · geauxai2026@gmail.com · @geaux.ai</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Paste the Apps Script Web App /exec URL here once it is deployed:
+  var ENDPOINT = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
+
+  var form = document.getElementById('intake');
+  var btn  = document.getElementById('sendBtn');
+  var note = document.getElementById('formNote');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    // basic validation
+    var required = ['name','email','role','problem','frequency','solved'];
+    for (var i=0;i<required.length;i++){
+      var el = form.elements[required[i]];
+      if(!el.value.trim()){ el.focus(); note.textContent='Please fill in the required fields (marked *).'; note.style.color='var(--accent)'; return; }
+    }
+    var email = form.elements['email'].value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ form.elements['email'].focus(); note.textContent='That email does not look right.'; note.style.color='var(--accent)'; return; }
+
+    var data = new URLSearchParams();
+    ['name','email','role','problem','frequency','solved','tools','constraints'].forEach(function(k){ data.append(k, (form.elements[k]||{}).value || ''); });
+    var areas = Array.prototype.slice.call(form.querySelectorAll('input[name=areas]:checked')).map(function(c){return c.value;});
+    data.append('areas', areas.join(', '));
+
+    if(ENDPOINT.indexOf('PASTE_') === 0){
+      note.textContent='Form is not connected to its inbox yet.'; note.style.color='var(--accent)'; return;
+    }
+
+    btn.disabled = true; btn.textContent='Sending…'; note.textContent=''; note.style.color='';
+    fetch(ENDPOINT, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:data.toString() })
+      .then(function(){ form.style.display='none'; document.getElementById('done').style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); })
+      .catch(function(){ btn.disabled=false; btn.textContent='Send it'; note.textContent='Something went wrong. Please try again, or email geauxai2026@gmail.com.'; note.style.color='var(--accent)'; });
+  });
+})();
+</script>
+</body>
+</html>
