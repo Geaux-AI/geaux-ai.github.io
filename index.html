@@ -37,6 +37,8 @@
   .navrow{max-width:1080px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;justify-content:space-between;}
   .brand{font-family:'Fraunces',serif;font-weight:600;font-size:21px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px;}
   .brand .bdot{width:9px;height:9px;border-radius:50%;background:var(--accent);display:inline-block;}
+  .brand .blogo{width:27px;height:27px;object-fit:contain;display:inline-block;}
+  .footrow .brand .blogo{width:22px;height:22px;}
   .navlinks{display:flex;align-items:center;gap:30px;}
   .navlinks a{font-size:13px;color:var(--ink-soft);transition:color .16s;}
   .navlinks a:hover{color:var(--accent);}
@@ -137,7 +139,7 @@
 
 <nav>
   <div class="navrow">
-    <a class="brand" href="#top"><span class="bdot"></span>Geaux AI</a>
+    <a class="brand" href="#top"><img class="blogo" src="assets/logo.png" alt="Geaux AI logo">Geaux AI</a>
     <div class="navlinks">
       <a class="hidesm" href="#about">What we do</a>
       <a class="hidesm" href="#approach">Approach</a>
@@ -246,7 +248,7 @@
 
 <footer>
   <div class="footrow">
-    <a class="brand" href="#top"><span class="bdot"></span>Geaux AI</a>
+    <a class="brand" href="#top"><img class="blogo" src="assets/logo.png" alt="Geaux AI logo">Geaux AI</a>
     <div class="meta">Baton Rouge, LA · geauxai2026@gmail.com · @geaux.ai</div>
   </div>
   <div class="disclaim">Geaux AI is an independent AI consulting practice, not affiliated with or endorsed by Louisiana State University. Every solution is delivered with human review and accepted by the client before it ships.</div>
