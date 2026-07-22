@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geaux AI | The Ledger, AI Consulting &amp; Automation</title>
+<meta name="description" content="Geaux AI is an AI consulting and automation service. Bring us a problem and we diagnose it before recommending anything.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Source+Sans+3:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#EFEAE0;
+    --paper:#F8F5EE;
+    --ink:#1C2433;
+    --ink-soft:#4A5162;
+    --muted:#726B5B;
+    --rule:#D6CDB6;
+    --rule-strong:#B9AD8C;
+    --indigo:#3B4CCA;
+    --indigo-deep:#28337F;
+    --verify:#1F7A5C;
+    --paper-shadow:0 1px 0 rgba(28,36,51,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bone);color:var(--ink);font-family:'Source Sans 3',sans-serif;line-height:1.62;font-size:16px;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .skip{position:absolute;left:-999px;top:0;background:var(--indigo);color:#fff;padding:10px 16px;z-index:100;font-weight:600;}
+  .skip:focus{left:12px;top:12px;}
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{outline:3px solid var(--indigo);outline-offset:2px;}
+  .mono{font-family:'Space Mono',monospace;}
+  ::selection{background:var(--indigo);color:#fff;}
+
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none!important;transition:none!important;}
+  }
+
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(239,234,224,.92);backdrop-filter:blur(8px);border-bottom:1.5px solid var(--ink);}
+  .navwrap{max-width:1140px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:66px;}
+  .brand{font-family:'Fraunces',serif;font-weight:600;font-style:italic;font-size:21px;text-decoration:none;color:var(--ink);}
+  .brand em{color:var(--indigo);font-style:italic;}
+  .navlinks{display:flex;gap:26px;list-style:none;align-items:center;}
+  .navlinks a{color:var(--ink-soft);text-decoration:none;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;transition:color .15s ease;}
+  .navlinks a:hover{color:var(--indigo);}
+  .navcta{background:var(--indigo);color:#fff!important;padding:9px 16px;border-radius:2px;}
+  .navcta:hover{background:var(--indigo-deep);}
+  @media(max-width:820px){.navlinks{gap:14px;}.navlinks li.hidemobile{display:none;}}
+
+  /* HERO */
+  header{border-bottom:1.5px solid var(--ink);}
+  .herowrap{max-width:1140px;margin:0 auto;padding:56px 24px 0;}
+  .ledgerhead{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--rule-strong);padding-bottom:14px;margin-bottom:34px;flex-wrap:wrap;gap:8px;}
+  .ledgerhead .lh-title{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+  .ledgerhead .lh-no{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(32px,5.6vw,58px);line-height:1.08;letter-spacing:-.01em;max-width:820px;}
+  h1 em{color:var(--indigo);font-style:italic;font-weight:600;}
+  .herosub{font-size:clamp(15px,1.8vw,17.5px);color:var(--ink-soft);max-width:580px;margin:22px 0 32px;}
+  .ctarow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px;}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;font-size:14px;font-family:'Space Mono',monospace;letter-spacing:.02em;padding:13px 24px;border-radius:2px;border:1.5px solid var(--ink);transition:transform .15s ease,background .15s ease,color .15s ease;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-indigo{background:var(--indigo);color:#fff;border-color:var(--indigo);}
+  .btn-indigo:hover{background:var(--indigo-deep);border-color:var(--indigo-deep);}
+  .btn-ghost{color:var(--ink);background:transparent;}
+  .btn-ghost:hover{border-color:var(--indigo);color:var(--indigo);}
+
+  /* ORG CHART — the ledger */
+  .orgchart{position:relative;padding:6px 0 44px;}
+  .oc-caption{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+  .oc-account{background:var(--indigo);color:#fff;border-radius:2px;padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:14px;position:relative;z-index:2;}
+  .oc-account .oc-label{font-family:'Fraunces',serif;font-weight:600;font-size:18px;font-style:italic;}
+  .oc-account .oc-sub{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.06em;opacity:.85;}
+  .oc-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
+  .oc-line{fill:none;stroke:var(--rule-strong);stroke-width:1.4;}
+  .oc-pulse{fill:var(--indigo);}
+  .oc-rows{margin-top:96px;position:relative;z-index:2;border-top:1px solid var(--rule);}
+  .oc-row{display:flex;align-items:center;gap:14px;padding:13px 4px;border-bottom:1px solid var(--rule);background:var(--paper);}
+  .oc-row .oc-num{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);width:34px;flex-shrink:0;}
+  .oc-row .oc-label{font-family:'Fraunces',serif;font-weight:600;font-size:15.5px;flex-grow:1;}
+  .oc-row .oc-status{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+  .oc-row .oc-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule-strong);flex-shrink:0;position:relative;transition:border-color .2s ease, background .2s ease;}
+  .oc-row .oc-check::after{content:"";position:absolute;left:4px;top:1px;width:5px;height:9px;border-right:2px solid transparent;border-bottom:2px solid transparent;transform:rotate(40deg);transition:border-color .2s ease;}
+  .oc-row.oc-lit{background:#EDF0FA;}
+  .oc-row.oc-lit .oc-status{color:var(--verify);}
+  .oc-row.oc-lit .oc-check{border-color:var(--verify);background:var(--verify);}
+  .oc-row.oc-lit .oc-check::after{border-color:#fff;}
+  @media(max-width:640px){
+    .oc-rows{margin-top:74px;}
+    .oc-row .oc-status{display:none;}
+    .oc-account{flex-direction:column;align-items:flex-start;gap:4px;}
+  }
+
+  /* SUMMARY STRIP */
+  .readout{border-bottom:1.5px solid var(--ink);background:var(--paper);}
+  .readoutwrap{max-width:1140px;margin:0 auto;padding:26px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media(max-width:760px){.readoutwrap{grid-template-columns:repeat(2,1fr);}}
+  .readout .r{border-left:2px solid var(--indigo);padding-left:14px;}
+  .readout .rlabel{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+  .readout .rval{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--ink);}
+
+  /* SECTIONS */
+  section{padding:88px 24px;}
+  .seclabel{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--indigo);margin-bottom:14px;font-weight:700;}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(25px,3.6vw,38px);letter-spacing:-.01em;margin-bottom:16px;max-width:760px;}
+  h2 em{color:var(--indigo);font-style:italic;}
+  .lede{font-size:16px;max-width:640px;color:var(--ink-soft);}
+
+  /* PROBLEMS as ledger line items */
+  .problemgrid{margin-top:44px;border-top:1.5px solid var(--ink);}
+  .problem{display:grid;grid-template-columns:140px 1fr;gap:22px;padding:24px 4px;border-bottom:1px solid var(--rule);}
+  .problem .ch{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--indigo);text-transform:uppercase;}
+  .problem h3{font-family:'Fraunces',serif;font-size:18px;font-weight:600;margin-bottom:8px;line-height:1.35;}
+  .problem p{font-size:14px;color:var(--ink-soft);max-width:560px;}
+  @media(max-width:640px){.problem{grid-template-columns:1fr;gap:8px;}}
+
+  /* METHOD */
+  .method{background:var(--paper);border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);}
+  .phasegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:44px;border:1.5px solid var(--ink);}
+  @media(max-width:940px){.phasegrid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.phasegrid{grid-template-columns:1fr;}}
+  .phase{padding:26px 22px;border-right:1px solid var(--rule-strong);background:var(--bone);}
+  .phase:last-child{border-right:none;}
+  @media(max-width:940px){.phase{border-bottom:1px solid var(--rule-strong);}}
+  .phase .pnum{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--indigo);text-transform:uppercase;font-weight:700;}
+  .phase h3{font-family:'Fraunces',serif;font-weight:600;font-size:17px;margin:10px 0 10px;}
+  .phase p{font-size:13.5px;color:var(--ink-soft);}
+  .gatelist{margin-top:36px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 30px;}
+  .gatelist div{font-size:14px;color:var(--ink-soft);padding-left:16px;position:relative;}
+  .gatelist div::before{content:"";position:absolute;left:0;top:9px;width:7px;height:1.5px;background:var(--indigo);}
+  .gatelist strong{color:var(--ink);font-family:'Fraunces',serif;font-weight:600;}
+
+  /* TEAM */
+  .agentnote{font-size:15px;color:var(--ink-soft);max-width:680px;margin-bottom:36px;}
+  .agentgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--rule-strong);border:1.5px solid var(--ink);}
+  .agent{background:var(--paper);padding:22px 18px;}
+  .agent .arole{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--indigo);margin-bottom:8px;font-weight:700;}
+  .agent h4{font-family:'Fraunces',serif;font-size:17px;font-weight:600;margin-bottom:8px;}
+  .agent p{font-size:13px;color:var(--ink-soft);line-height:1.55;}
+
+  /* CONTACT */
+  .contact{text-align:center;}
+  .contact h2{margin-left:auto;margin-right:auto;}
+  .contact .lede{margin:0 auto 30px;}
+  .contactrow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+
+  /* FOOTER */
+  footer{background:var(--ink);color:#C9CBD6;padding:40px 24px;}
+  .footwrap{max-width:1140px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start;}
+  .footbrand{font-family:'Fraunces',serif;font-weight:600;font-style:italic;font-size:18px;color:#fff;}
+  footer p{font-size:12.5px;margin-top:8px;}
+  .footlinks{display:flex;gap:20px;list-style:none;flex-wrap:wrap;}
+  .footlinks a{color:#C9CBD6;text-decoration:none;font-family:'Space Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}
+  .footlinks a:hover{color:#fff;}
+  .disclaim{max-width:1140px;margin:24px auto 0;font-size:11px;color:#8B8FA0;border-top:1px solid #333A4D;padding-top:16px;}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<nav>
+  <div class="navwrap">
+    <a class="brand" href="#top">Geaux <em>AI</em></a>
+    <ul class="navlinks">
+      <li class="hidemobile"><a href="#problems">What We Solve</a></li>
+      <li class="hidemobile"><a href="#method">How It Works</a></li>
+      <li><a href="#team">Our Team</a></li>
+      <li><a class="navcta" href="#contact">Start a Project</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="herowrap">
+    <div class="ledgerhead">
+      <span class="lh-title">Engagement Ledger</span>
+      <span class="lh-no">No. 001 &middot; Open</span>
+    </div>
+    <h1>You bring the problem. We open a file and <em>diagnose it</em> before we quote anything.</h1>
+    <p class="herosub">Geaux AI is an AI consulting and automation service. Send us what is slowing you down and we assess it first, in plain language, before we recommend a fix. Sometimes that fix is an agent. Sometimes it is a five line script. We post the finding either way.</p>
+    <div class="ctarow">
+      <a class="btn btn-indigo" href="https://docs.google.com/forms/d/e/1FAIpQLScx9KQ1XdFSqgvarcvlmtizK7QEaAQ1zyc7_BApvU2v-g2xCQ/viewform" target="_blank" rel="noopener">Open a file</a>
+      <a class="btn btn-ghost" href="#method">See how it's routed</a>
+    </div>
+
+    <div class="orgchart" id="orgchart">
+      <p class="oc-caption">How an entry moves through the ledger</p>
+      <div class="oc-account">
+        <span class="oc-label">The Orchestrator</span>
+        <span class="oc-sub mono">claude&#8209;code</span>
+      </div>
+      <svg class="oc-svg" aria-hidden="true"></svg>
+      <div class="oc-rows">
+        <div class="oc-row" data-dept="dev"><span class="oc-num">01</span><span class="oc-label">Developers</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+        <div class="oc-row" data-dept="design"><span class="oc-num">02</span><span class="oc-label">Designers</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+        <div class="oc-row" data-dept="mktg"><span class="oc-num">03</span><span class="oc-label">Marketing</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+        <div class="oc-row" data-dept="social"><span class="oc-num">04</span><span class="oc-label">Social</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+        <div class="oc-row" data-dept="fin"><span class="oc-num">05</span><span class="oc-label">Finance</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+        <div class="oc-row" data-dept="ops"><span class="oc-num">06</span><span class="oc-label">Operations</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+        <div class="oc-row" data-dept="legal"><span class="oc-num">07</span><span class="oc-label">Legal</span><span class="oc-status">Pending</span><span class="oc-check"></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="readout" aria-label="How we deliver">
+  <div class="readoutwrap">
+    <div class="r"><div class="rlabel">Sequence</div><div class="rval">Diagnose before we quote</div></div>
+    <div class="r"><div class="rlabel">Fix types</div><div class="rval">Agent, skill, workflow, or none</div></div>
+    <div class="r"><div class="rlabel">Sizing</div><div class="rval">We size it, never oversell it</div></div>
+    <div class="r"><div class="rlabel">Ownership</div><div class="rval">Handed off, no lock in</div></div>
+  </div>
+</div>
+
+<main id="main">
+
+<section id="problems">
+  <div class="wrap">
+    <div class="seclabel">What We Solve</div>
+    <h2>Different people, same bottleneck: work that keeps landing back on your plate</h2>
+    <p class="lede">Whether you run a business or just have too much going on, the pattern repeats. Work eats your time and shouldn't. Bring it to us in plain language and we will figure out what it actually is. Often the fix is a workflow rather than an agent, and sometimes it isn't AI at all. Figuring that out is our job.</p>
+    <div class="problemgrid">
+      <div class="problem">
+        <div class="ch">Engineering</div>
+        <div><h3>You need a tool that doesn't exist yet</h3><p>A custom agent, an MCP server, or an integration to a system with no off the shelf option. You know what it should do. You just need it built and working.</p></div>
+      </div>
+      <div class="problem">
+        <div class="ch">Operations</div>
+        <div><h3>The same admin eats your week</h3><p>Invoicing, scheduling, reconciliation, done by hand every single week. Work that repeats can be automated.</p></div>
+      </div>
+      <div class="problem">
+        <div class="ch">Marketing</div>
+        <div><h3>Marketing is a full time job you don't have</h3><p>Copy, SEO, landing pages, email sequences, campaigns. The strategy is in your head. The execution never gets off the ground.</p></div>
+      </div>
+      <div class="problem">
+        <div class="ch">Social</div>
+        <div><h3>You can't keep the content pipeline full</h3><p>Posts, reels, captions, thumbnails, a calendar that stays fed. Showing up consistently is the whole game, and it's exactly what slips.</p></div>
+      </div>
+      <div class="problem">
+        <div class="ch">Finance</div>
+        <div><h3>The numbers only add up if you do them by hand</h3><p>Statements, budgets, reconciliation, month end close. Accuracy critical work over structured data that eats hours and hides errors.</p></div>
+      </div>
+      <div class="problem">
+        <div class="ch">Legal</div>
+        <div><h3>Contracts and policies pile up unread</h3><p>NDAs, terms, vendor agreements, compliance questions. A first pass review would save you hours. You just never have time to do it.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="method" id="method">
+  <div class="wrap">
+    <div class="seclabel">How It Works</div>
+    <h2>We diagnose first. Then we recommend. We never lead with the tool.</h2>
+    <p class="lede">Think of it like any good service call. You describe what's wrong, we look before we quote, and we only do the work that fixes it. The order matters. Problem first, solution second.</p>
+    <div class="phasegrid">
+      <div class="phase">
+        <div class="pnum">Entry 01</div>
+        <h3>You describe the problem</h3>
+        <p>Plain language, no jargon. You don't need to know whether the fix is an agent or a spreadsheet. Just tell us what's slowing you down and what solved looks like.</p>
+      </div>
+      <div class="phase">
+        <div class="pnum">Entry 02</div>
+        <h3>We determine and delegate</h3>
+        <p>Before we propose anything, we scope the actual problem and route it to whichever specialist knows the domain best. Diagnosis first, no solution pitched yet.</p>
+      </div>
+      <div class="phase">
+        <div class="pnum">Entry 03</div>
+        <h3>We find the right sized fix</h3>
+        <p>Then we pick the fit and tell you honestly. Sometimes it's an agent or a skill. Sometimes a simple workflow or a connector. Sometimes the best answer isn't AI at all.</p>
+      </div>
+      <div class="phase">
+        <div class="pnum">Entry 04</div>
+        <h3>We build only what fits</h3>
+        <p>Proven end to end, reviewed with you until you say yes, then handed off as your own, with no lock in. If nothing needs building, we'll tell you that too.</p>
+      </div>
+    </div>
+    <p class="agentnote" style="margin-top:36px;margin-bottom:0;"><strong style="color:var(--ink);">When AI is the answer, we size it to the job.</strong> Most fixes land in one of these. We'll always tell you which:</p>
+    <div class="gatelist">
+      <div><strong>Agent:</strong> a standalone Claude that owns a whole role.</div>
+      <div><strong>Skill or workflow:</strong> a repeatable procedure or documented process.</div>
+      <div><strong>Subagent:</strong> handles one slice of a bigger job.</div>
+      <div><strong>MCP server:</strong> a custom tool for a system with no existing integration.</div>
+      <div><strong>Connector:</strong> a hosted link to a tool you already use.</div>
+      <div><strong>Something simpler:</strong> a template or a smarter spreadsheet. Not every problem needs AI.</div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <div class="seclabel">Behind The Scenes</div>
+    <h2>The specialists we route your problem to</h2>
+    <p class="agentnote">This is our own team, how we work internally. It isn't something we install on your side. When you bring a problem, an orchestrator reads it, splits it into slices, routes each to the department that owns it, and combines every answer into one recommendation. A human always reviews before anything ships.</p>
+    <div class="agentgrid">
+      <div class="agent">
+        <div class="arole">CEO &middot; Manager</div>
+        <h4>The Orchestrator</h4>
+        <p>Reads your problem once, splits it into slices, routes each to the department that owns it, then combines every answer into one recommendation. It coordinates. The specialists build.</p>
+      </div>
+      <div class="agent">
+        <div class="arole">Engineering</div>
+        <h4>Developers</h4>
+        <p>The seat that actually builds. Agents, skills, MCP servers, connectors, code, tests. Here a spec becomes a working tool.</p>
+      </div>
+      <div class="agent">
+        <div class="arole">Design</div>
+        <h4>Designers</h4>
+        <p>UI, brand, frontend layout, motion, polished web artifacts. Plus the reference research so what gets built actually looks the part.</p>
+      </div>
+      <div class="agent">
+        <div class="arole">Growth</div>
+        <h4>Marketing</h4>
+        <p>Copywriting, positioning, SEO, landing pages, campaigns. The words and funnels that get you found and get you sign ups.</p>
+      </div>
+      <div class="agent">
+        <div class="arole">Content</div>
+        <h4>Social Media</h4>
+        <p>Posts, captions, reels, thumbnails, content calendars. High volume content built to keep the pipeline full.</p>
+      </div>
+      <div class="agent">
+        <div class="arole">Numbers</div>
+        <h4>Finance</h4>
+        <p>Statements, reconciliation, budgets, audits, bookkeeping analysis. Accuracy critical work, done consistently instead of by hand.</p>
+      </div>
+      <div class="agent">
+        <div class="arole">Small Business</div>
+        <h4>Operations</h4>
+        <p>Cash flow, payroll, invoicing, the day to day running of a small business. Recurring admin that quietly eats a week and shouldn't.</p>
+      </div>
+      <div class="agent">
+        <div class="arole">Compliance</div>
+        <h4>Legal</h4>
+        <p>Contract and NDA review, policies, terms, compliance questions. A first pass read that flags what matters. It doesn't replace a licensed attorney.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="seclabel" style="justify-content:center;">Start Here</div>
+    <h2>Tell us what's eating your time</h2>
+    <p class="lede">The business, the side project, whatever you keep doing by hand. Describe it in plain language. We'll diagnose it, figure out what actually fixes it, and tell you straight, even when the answer is that you don't need us for this. The first conversation is free.</p>
+    <div class="contactrow">
+      <a class="btn btn-indigo" href="https://docs.google.com/forms/d/e/1FAIpQLScx9KQ1XdFSqgvarcvlmtizK7QEaAQ1zyc7_BApvU2v-g2xCQ/viewform" target="_blank" rel="noopener">Tell us your problem</a>
+      <a class="btn btn-ghost" href="https://instagram.com/geaux.ai" target="_blank" rel="noopener">@geaux.ai</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footwrap">
+    <div>
+      <div class="footbrand">Geaux <em>AI</em></div>
+      <p>Baton Rouge, LA &middot; geauxai2026@gmail.com &middot; <a href="https://instagram.com/geaux.ai" target="_blank" rel="noopener" style="color:#fff;text-decoration:none;">@geaux.ai</a></p>
+    </div>
+    <ul class="footlinks">
+      <li><a href="#problems">What We Solve</a></li>
+      <li><a href="#method">How It Works</a></li>
+      <li><a href="#team">Our Team</a></li>
+      <li><a href="#contact">Start a Project</a></li>
+    </ul>
+  </div>
+  <div class="disclaim">Geaux AI is an independent AI consulting practice, not affiliated with or endorsed by Louisiana State University. Every solution is delivered with human review and accepted by the client before it ships. You operate your own tools and retain final responsibility for your decisions, finances, and compliance.</div>
+</footer>
+
+<script>
+(function(){
+  const root = document.getElementById('orgchart');
+  const svg = root.querySelector('.oc-svg');
+  const account = root.querySelector('.oc-account');
+  const rows = [...root.querySelectorAll('.oc-rows .oc-row')];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  let entries = [];
+  let raf = null;
+
+  function pt(el, edge){
+    const r = el.getBoundingClientRect();
+    const cr = root.getBoundingClientRect();
+    const x = edge === 'bottom' ? r.left + 40 - cr.left : r.left + 4 - cr.left;
+    const y = (edge === 'bottom' ? r.bottom : r.top + r.height/2) - cr.top;
+    return {x,y};
+  }
+
+  function build(){
+    svg.setAttribute('viewBox', `0 0 ${root.clientWidth} ${root.clientHeight}`);
+    svg.innerHTML = '';
+    entries = [];
+    const start = pt(account, 'bottom');
+    rows.forEach((row, i) => {
+      const end = pt(row, 'top');
+      const midY = start.y + (end.y - start.y) * 0.4;
+      const d = `M ${start.x} ${start.y} C ${start.x} ${midY}, ${end.x} ${midY}, ${end.x} ${end.y}`;
+      const path = document.createElementNS(SVGNS, 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('class', 'oc-line');
+      svg.appendChild(path);
+      const len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = reduce ? 0 : len;
+
+      const pulse = document.createElementNS(SVGNS, 'circle');
+      pulse.setAttribute('r', '3');
+      pulse.setAttribute('class', 'oc-pulse');
+      pulse.style.opacity = '0';
+      svg.appendChild(pulse);
+
+      entries.push({path, len, pulse, row, drawDelay: i * 80, drawDur: 560});
+    });
+  }
+
+  function drawIn(t0){
+    function frame(t){
+      const elapsed = t - t0;
+      let allDone = true;
+      entries.forEach(e => {
+        const local = elapsed - e.drawDelay;
+        if(local < 0){ allDone = false; return; }
+        const p = Math.min(1, local / e.drawDur);
+        e.path.style.strokeDashoffset = String(e.len * (1 - p));
+        if(p < 1) allDone = false;
+      });
+      if(!allDone){ requestAnimationFrame(frame); }
+      else { startPulses(); }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function startPulses(){
+    function loop(t){
+      entries.forEach((e, i) => {
+        const cycle = 2800;
+        const offset = i * 300;
+        const local = (t + offset) % cycle;
+        const p = local / cycle;
+        if(p < 0.5){
+          const pos = e.path.getPointAtLength(e.len * (p / 0.5));
+          e.pulse.setAttribute('cx', pos.x);
+          e.pulse.setAttribute('cy', pos.y);
+          e.pulse.style.opacity = '1';
+        } else if(p < 0.55){
+          e.pulse.style.opacity = '0';
+          e.row.classList.add('oc-lit');
+        } else if(p > 0.88){
+          e.row.classList.remove('oc-lit');
+        }
+      });
+      raf = requestAnimationFrame(loop);
+    }
+    raf = requestAnimationFrame(loop);
+  }
+
+  function init(){
+    build();
+    if(reduce){
+      rows.forEach(r => r.classList.add('oc-lit'));
+    } else {
+      requestAnimationFrame(t => drawIn(t));
+    }
+  }
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if(raf) cancelAnimationFrame(raf);
+      build();
+      if(reduce){ rows.forEach(r => r.classList.add('oc-lit')); }
+      else { startPulses(); }
+    }, 150);
+  });
+
+  if(document.fonts && document.fonts.ready){
+    document.fonts.ready.then(init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+</body>
+</html>
