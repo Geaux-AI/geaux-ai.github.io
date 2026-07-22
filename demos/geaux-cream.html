@@ -102,17 +102,22 @@
   .avatar{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:12px;background:var(--paper-2);border:1px solid var(--rule-strong);color:var(--ink-soft);margin:0 auto 9px;}
   .avatar svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.55;stroke-linecap:round;stroke-linejoin:round;}
   .pill{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper);background:var(--accent);padding:3px 11px;border-radius:20px;margin-bottom:11px;}
-  .ceo{width:258px;max-width:82%;margin:0 auto;padding:18px 22px 20px;border-color:var(--accent);box-shadow:0 14px 34px -20px rgba(182,102,42,.55),0 0 0 4px rgba(182,102,42,.07);}
-  .ceo .avatar{width:48px;height:48px;color:var(--accent);border-color:var(--accent);background:rgba(182,102,42,.09);}
-  .ceo .tag{color:var(--accent);margin-top:2px;}
-  .ceo .nm{font-size:20px;margin-top:2px;}
-  .ceo .role{font-size:12px;color:var(--muted);margin-top:3px;}
-  .rowgap{height:132px;}
-  @media(max-width:680px){.rowgap{height:104px;}}
-  .depts{display:grid;grid-template-columns:repeat(7,1fr);gap:11px;}
+  .boss{width:256px;max-width:82%;margin:0 auto;padding:18px 22px 20px;border-color:var(--accent);box-shadow:0 14px 34px -20px rgba(182,102,42,.55),0 0 0 4px rgba(182,102,42,.07);}
+  .boss .avatar{width:48px;height:48px;color:var(--accent);border-color:var(--accent);background:rgba(182,102,42,.09);}
+  .boss .nm{font-size:20px;margin-top:2px;}
+  .boss .role{font-size:12px;color:var(--muted);margin-top:3px;}
+  .devrow{display:flex;justify-content:center;}
+  .dev{width:212px;max-width:76%;padding:15px 18px;border-color:var(--accent);box-shadow:0 10px 26px -18px rgba(182,102,42,.5),0 0 0 3px rgba(182,102,42,.06);}
+  .dev .avatar{color:var(--accent);border-color:var(--accent);background:rgba(182,102,42,.08);}
+  .dev .tag{color:var(--accent);}
+  .dev:hover{transform:translateY(-3px);}
+  .gap1{height:66px;}
+  .gap2{height:120px;}
+  @media(max-width:680px){.gap1{height:52px;}.gap2{height:92px;}}
+  .depts{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;}
   .dept:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:var(--shadow);}
   .dept:hover .avatar{color:var(--accent);border-color:var(--accent);}
-  @media(max-width:680px){.depts{grid-template-columns:1fr 1fr;gap:16px 40px;}.board{padding:32px 20px 36px;}}
+  @media(max-width:680px){.depts{grid-template-columns:1fr 1fr;gap:16px 34px;}.board{padding:32px 18px 36px;}}
 
   /* CONTACT */
   .contact{text-align:center;padding:88px 0;}
@@ -160,7 +165,7 @@
       <h2>What we do</h2>
       <div class="about-copy">
         <p>Geaux AI is a small consulting and automation practice. We help people put AI to work without the guesswork, and without buying tools they do not need.</p>
-        <p>You bring a task that eats your time. We figure out what it really is, pick the smallest thing that solves it, build it, and hand it over so you own it. No lock-in, no jargon, and no pressure to automate what is fine as it is.</p>
+        <p>You bring a task that eats your time. We figure out what it really is, pick the smallest thing that solves it, build it, and hand it over so you own it. It stays yours to keep, in plain language, with no pressure to automate what is already fine.</p>
       </div>
     </div>
   </div>
@@ -177,9 +182,9 @@
     </div>
     <div class="steps">
       <div class="step"><div class="num">01</div><h3>Diagnose</h3><p>We understand the real problem in plain language before anything gets proposed.</p></div>
-      <div class="step"><div class="num">02</div><h3>Delegate</h3><p>We route it to whoever on our team knows that domain best.</p></div>
-      <div class="step"><div class="num">03</div><h3>Right-fit</h3><p>We pick the smallest fix that works. An agent, a workflow, or something simpler.</p></div>
-      <div class="step"><div class="num">04</div><h3>Hand off</h3><p>We build it, prove it works, and hand it to you to keep. No lock-in.</p></div>
+      <div class="step"><div class="num">02</div><h3>Delegate</h3><p>We hand it to whoever on the team knows it best.</p></div>
+      <div class="step"><div class="num">03</div><h3>Right fix</h3><p>We pick the smallest thing that works. An agent, a small automation, or something simpler.</p></div>
+      <div class="step"><div class="num">04</div><h3>Hand off</h3><p>We build it, prove it works, and hand it over so it is yours to keep.</p></div>
     </div>
   </div>
 </section>
@@ -187,25 +192,33 @@
 <section id="team" class="team">
   <div class="wrap">
     <div class="lead-label"><span class="eyebrow">My team</span></div>
-    <h2>Every problem enters at the top and <em>routes down</em> to the right person on my team.</h2>
-    <p class="sub">One orchestrator reads your problem, splits it, and hands it to whoever owns it. Watch the signal travel.</p>
+    <h2>How a problem <em>moves</em> through my team.</h2>
+    <p class="sub">The boss takes it in and hands it to the developer, the one who knows what to build. They build the fix, then bring in whoever else the job needs. Watch it move.</p>
 
     <div class="board">
       <div class="chart" id="chart">
         <svg class="wires" id="wires" aria-hidden="true"></svg>
 
-        <div class="node ceo" id="ceo">
-          <span class="pill">CEO</span>
+        <div class="node boss" id="boss">
+          <span class="pill">Boss</span>
           <span class="avatar"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="2.6"/><path d="M11 8.4V4.8M11 13.6v3.6M8.4 11H4.8M13.6 11h3.6"/><circle cx="11" cy="4" r="1.05"/><circle cx="11" cy="18" r="1.05"/><circle cx="4" cy="11" r="1.05"/><circle cx="18" cy="11" r="1.05"/></svg></span>
-          <div class="nm">Orchestrator</div>
-          <div class="tag">claude-code</div>
-          <div class="role">routes every problem</div>
+          <div class="nm">The Boss</div>
+          <div class="role">reads every problem first</div>
         </div>
 
-        <div class="rowgap"></div>
+        <div class="gap1"></div>
+
+        <div class="devrow">
+          <div class="node dev" id="dev">
+            <span class="avatar"><svg viewBox="0 0 22 22"><path d="M8 7l-4 4 4 4M14 7l4 4-4 4"/></svg></span>
+            <div class="nm">Developer</div>
+            <div class="tag">Build lead</div>
+          </div>
+        </div>
+
+        <div class="gap2"></div>
 
         <div class="depts" id="depts">
-          <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M8 7l-4 4 4 4M14 7l4 4-4 4"/></svg></span><div class="nm">Developers</div><div class="tag">Dev</div></div>
           <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M4 18l1-3.6L14.4 5a1.5 1.5 0 012.1 0l.5.5a1.5 1.5 0 010 2.1L7.6 17 4 18z"/></svg></span><div class="nm">Designers</div><div class="tag">Design</div></div>
           <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M4 9v4h3l7 4V5L7 9H4z"/><path d="M16.4 8.8a3.4 3.4 0 010 4.4"/></svg></span><div class="nm">Marketing</div><div class="tag">Growth</div></div>
           <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><circle cx="6" cy="11" r="2"/><circle cx="15.5" cy="6" r="2"/><circle cx="15.5" cy="16" r="2"/><path d="M7.8 10l6-3M7.8 12l6 3"/></svg></span><div class="nm">Social</div><div class="tag">Content</div></div>
@@ -242,33 +255,37 @@
 (function(){
   var chart = document.getElementById('chart');
   var wires = document.getElementById('wires');
-  var ceo   = document.getElementById('ceo');
+  var boss  = document.getElementById('boss');
+  var dev   = document.getElementById('dev');
   var depts = Array.prototype.slice.call(document.querySelectorAll('#depts .dept'));
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var SVGNS = 'http://www.w3.org/2000/svg';
-  var wireEls = [], flowEls = [], flowAnims = [], nodeAnims = [];
+  var T = 3800; // one full pipeline cycle
 
-  depts.forEach(function(){
-    var w = document.createElementNS(SVGNS,'path'); w.setAttribute('class','wire'); wires.appendChild(w); wireEls.push(w);
-  });
-  depts.forEach(function(){
-    var f = document.createElementNS(SVGNS,'path'); f.setAttribute('class','flow'); f.style.opacity='0'; wires.appendChild(f); flowEls.push(f);
-  });
+  // Pipeline: the boss hands to the developer first, then the developer
+  // fans the work out to whichever specialists the job needs.
+  var conns = [{from:boss, to:dev, win:[0.02,0.30]}];
+  depts.forEach(function(n,i){ var ws = 0.40 + i*0.055; conns.push({from:dev, to:n, win:[ws, ws+0.20]}); });
+
+  var wireEls = [], flowEls = [], flowAnims = [], nodeAnims = [];
+  conns.forEach(function(){ var w=document.createElementNS(SVGNS,'path'); w.setAttribute('class','wire'); wires.appendChild(w); wireEls.push(w); });
+  conns.forEach(function(){ var f=document.createElementNS(SVGNS,'path'); f.setAttribute('class','flow'); f.style.opacity='0'; wires.appendChild(f); flowEls.push(f); });
+
+  function pathBetween(from,to,cb){
+    var a=from.getBoundingClientRect(), b=to.getBoundingClientRect();
+    var ax=a.left+a.width/2-cb.left, ay=a.bottom-cb.top;
+    var bx=b.left+b.width/2-cb.left, by=b.top-cb.top;
+    var my=ay+(by-ay)*0.5;
+    return 'M '+ax+' '+ay+' C '+ax+' '+my+', '+bx+' '+my+', '+bx+' '+by;
+  }
 
   // Recompute geometry only. Resting wires stay solid and always visible;
   // only the comet + node bloom animate, so resize/reflow never hides lines.
   function layout(){
     var cb = chart.getBoundingClientRect();
     wires.setAttribute('viewBox','0 0 '+cb.width+' '+cb.height);
-    var o = ceo.getBoundingClientRect();
-    var ox = o.left + o.width/2 - cb.left;
-    var oy = o.bottom - cb.top;
-    depts.forEach(function(n,i){
-      var r = n.getBoundingClientRect();
-      var nx = r.left + r.width/2 - cb.left;
-      var ny = r.top - cb.top;
-      var my = oy + (ny-oy)*0.5;
-      var d = 'M '+ox+' '+oy+' C '+ox+' '+my+', '+nx+' '+my+', '+nx+' '+ny;
+    conns.forEach(function(c,i){
+      var d = pathBetween(c.from, c.to, cb);
       wireEls[i].setAttribute('d', d);
       flowEls[i].setAttribute('d', d);
       flowEls[i].dataset.len = flowEls[i].getTotalLength();
@@ -281,37 +298,39 @@
     nodeAnims.forEach(function(a){a && a.cancel();});
     flowAnims = []; nodeAnims = [];
     if(reduce){ return; }
-    depts.forEach(function(n,i){
+    conns.forEach(function(c,i){
       var len = parseFloat(flowEls[i].dataset.len)||0;
-      var seg = Math.max(30, len*0.14);
+      var seg = Math.max(28, len*0.16);
+      var ws = c.win[0], we = c.win[1];
       flowEls[i].style.strokeDasharray = seg+' '+(len+seg);
       flowEls[i].style.opacity='1';
-      flowAnims[i]=flowEls[i].animate(
-        [{strokeDashoffset:0, opacity:0, offset:0},
-         {opacity:1, offset:0.10},
-         {opacity:1, offset:0.80},
-         {strokeDashoffset:-len, opacity:0, offset:1}],
-        {duration:2600, delay:i*230, iterations:Infinity, easing:'cubic-bezier(.42,0,.4,1)'}
-      );
-      nodeAnims[i]=n.animate(
-        [{boxShadow:'0 0 0 0 rgba(182,102,42,0)', offset:0},
-         {boxShadow:'0 0 0 0 rgba(182,102,42,0)', offset:0.70},
-         {boxShadow:'0 0 0 3px rgba(182,102,42,.30)', offset:0.88},
-         {boxShadow:'0 0 0 0 rgba(182,102,42,0)', offset:1}],
-        {duration:2600, delay:i*230, iterations:Infinity, easing:'ease-out'}
-      );
+      flowAnims[i]=flowEls[i].animate([
+        {offset:0,  strokeDashoffset:0,    opacity:0},
+        {offset:ws, strokeDashoffset:0,    opacity:0},
+        {offset:Math.min(ws+0.02,we-0.02), strokeDashoffset:0,    opacity:1},
+        {offset:Math.max(we-0.02,ws+0.03), strokeDashoffset:-len, opacity:1},
+        {offset:we, strokeDashoffset:-len, opacity:0},
+        {offset:1,  strokeDashoffset:-len, opacity:0}
+      ], {duration:T, iterations:Infinity, easing:'linear'});
+      nodeAnims[i]=c.to.animate([
+        {offset:0, boxShadow:'0 0 0 0 rgba(182,102,42,0)'},
+        {offset:Math.max(we-0.05,0.001), boxShadow:'0 0 0 0 rgba(182,102,42,0)'},
+        {offset:we, boxShadow:'0 0 0 3px rgba(182,102,42,.32)'},
+        {offset:Math.min(we+0.05,0.999), boxShadow:'0 0 0 0 rgba(182,102,42,0)'},
+        {offset:1, boxShadow:'0 0 0 0 rgba(182,102,42,0)'}
+      ], {duration:T, iterations:Infinity, easing:'ease-out'});
     });
   }
 
-  // hover spotlight
+  // hover spotlight: light the full route from the boss through the developer to this seat
   depts.forEach(function(n,i){
+    var idx = i+1;
     n.addEventListener('mouseenter',function(){
-      wireEls.forEach(function(w,j){ w.style.opacity = j===i?'1':'0.28'; flowEls[j].style.opacity=j===i?'':'0.12'; });
-      wireEls[i].style.stroke='var(--accent)';
+      wireEls.forEach(function(w,j){ w.style.opacity=(j===idx||j===0)?'1':'0.22'; });
+      wireEls[idx].style.stroke='var(--accent)'; wireEls[0].style.stroke='var(--accent)';
     });
     n.addEventListener('mouseleave',function(){
       wireEls.forEach(function(w){ w.style.opacity='1'; w.style.stroke=''; });
-      flowEls.forEach(function(f){ f.style.opacity=''; });
     });
   });
 
