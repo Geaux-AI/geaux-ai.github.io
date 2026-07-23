@@ -10,9 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#F4EFE4; --paper-2:#FBF8F1; --ink:#211E18; --ink-soft:#463F35;
-    --muted:#8A8071; --rule:#E3DACA; --rule-strong:#D6CBB6;
-    --accent:#B6662A; --accent-soft:#C67C3E;
+    --paper:#F5F2EC; --paper-2:#FCFAF7; --ink:#211D24; --ink-soft:#4A4550;
+    --muted:#8B8590; --rule:#E3DDD6; --rule-strong:#D2CAC0;
+    --accent:#DA291C; --accent-soft:#E8574A;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -104,7 +104,7 @@
   }
   #graphic .g-header{padding:44px 0 30px}
   #graphic .g-chapter{font-family:'Fraunces',serif;font-weight:600;font-size:40px;line-height:1.1;color:var(--ink);margin:0}
-  #graphic .g-weekof{font-family:'JetBrains Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:.24em;color:var(--accent);margin:14px 0 0}
+  #graphic .g-weekof{font-family:'JetBrains Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:.24em;color:#B71F14;margin:14px 0 0}
   #graphic .g-legend{display:flex;flex-wrap:wrap;gap:10px 26px;padding:22px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
   #graphic .g-legitem{display:inline-flex;align-items:center;gap:8px}
   #graphic .g-dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
@@ -125,8 +125,8 @@
   #graphic .g-name{font-family:'Fraunces',serif;font-weight:600;font-size:20px;line-height:1.2;color:var(--ink);margin:0}
   #graphic .g-loc{font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);margin:6px 0 0}
 
-  #graphic .g-card.imp{border:2px solid var(--accent);background:linear-gradient(rgba(182,102,42,.07),rgba(182,102,42,.07)),var(--paper-2);box-shadow:0 10px 26px -18px rgba(182,102,42,.5)}
-  #graphic .g-star{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1}
+  #graphic .g-card.imp{border:2px solid var(--accent);background:linear-gradient(rgba(218,41,28,0.06),rgba(218,41,28,0.06)),var(--paper-2);box-shadow:0 10px 26px -18px rgba(218,41,28,.5)}
+  #graphic .g-star{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:#FCFAF7;display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1}
 
   #graphic .g-emptyday{border:1px dashed var(--rule);border-radius:12px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--muted)}
   #graphic .g-footer{padding:22px 0 34px;border-top:1px solid var(--rule);margin-top:32px}
@@ -304,13 +304,13 @@
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const DAY_FULL = {Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday',Fri:'Friday',Sat:'Saturday',Sun:'Sunday'};
 const CATS = [
-  {name:'Chapter Meeting',        bg:'#3B4A5A', fg:'#F4EFE4'},
-  {name:'Brotherhood',            bg:'#4C6B4F', fg:'#F4EFE4'},
-  {name:'Philanthropy / Service', bg:'#2F6B66', fg:'#F4EFE4'},
-  {name:'Recruitment',            bg:'#BC9A45', fg:'#211E18'},
-  {name:'Social',                 bg:'#7A2E33', fg:'#F4EFE4'},
-  {name:'Academic / Professional',bg:'#5B4870', fg:'#F4EFE4'},
-  {name:'SigEp Meals',            bg:'#EAD9BE', fg:'#463F35'},
+  {name:'Chapter Meeting',        bg:'#F1E7F6', fg:'#8031A7'},
+  {name:'Brotherhood',            bg:'#F7E3E6', fg:'#9C2350'},
+  {name:'Philanthropy / Service', bg:'#E6EEE1', fg:'#3D6B33'},
+  {name:'Recruitment',            bg:'#FBEBD2', fg:'#8F4F00'},
+  {name:'Social',                 bg:'#DEEEEC', fg:'#1F6B63'},
+  {name:'Academic / Professional',bg:'#E3E7EF', fg:'#35476B'},
+  {name:'SigEp Meals',            bg:'#F2E9D2', fg:'#7C5D00'},
 ];
 const LS_KEY = 'geaux_week_v1';
 
@@ -515,7 +515,7 @@ function rowHtml(e,i,scope){
   const delFn  = scope==='chair'?`chairDelete(${i})`:`builderDelete(${i})`;
   const chairTag = (scope==='builder' && e.chair) ? ` <span style="color:var(--muted)">· ${esc(e.chair)}</span>` : '';
   return `<li class="evrow">
-    <span class="bar" style="background:${c.bg}"></span>
+    <span class="bar" style="background:${c.fg}"></span>
     <span class="meta">
       <b>${esc(e.name)}${star}</b>
       <small>${DAY_FULL[e.day]} · ${esc(t)} · ${esc(c.name)}${loc}${chairTag}</small>
@@ -631,7 +631,7 @@ function renderGraphic(){
   const present = new Set(events.map(e=>e.cat));
   const legendCats = CATS.map((c,i)=>({c,i})).filter(x=>present.has(x.i));
   const legendHtml = (legendCats.length?legendCats:[]).map(x=>
-    `<span class="g-legitem"><span class="g-dot" style="background:${x.c.bg}"></span><span class="g-leglabel">${esc(x.c.name)}</span></span>`
+    `<span class="g-legitem"><span class="g-dot" style="background:${x.c.fg}"></span><span class="g-leglabel">${esc(x.c.name)}</span></span>`
   ).join('');
 
   // days
@@ -668,7 +668,7 @@ function cardHtml(e){
   const time = e.time ? esc(e.time) : '';
   const loc = e.loc ? `<div class="g-loc">• ${esc(e.loc)}</div>` : '';
   return `<div class="g-card${imp}">
-    <div class="g-leftbar" style="background:${c.bg}"></div>
+    <div class="g-leftbar" style="background:${c.fg}"></div>
     ${star}
     <div class="g-cardtop">
       <span class="g-chip" style="background:${c.bg};color:${c.fg}">${esc(c.name)}</span>
@@ -706,7 +706,7 @@ async function downloadPng(){
     const prevT = scaleWrap.style.transform, prevH = scaleWrap.style.height;
     scaleWrap.style.transform='none'; scaleWrap.style.height='auto';
     const dataUrl = await window.htmlToImage.toPng(node, {
-      pixelRatio: 2, cacheBust: true, backgroundColor: '#F4EFE4',
+      pixelRatio: 2, cacheBust: true, backgroundColor: '#F5F2EC',
       width: 1080, height: node.offsetHeight
     });
     scaleWrap.style.transform=prevT; scaleWrap.style.height=prevH;
@@ -726,7 +726,7 @@ async function downloadPng(){
 async function __exportDataUrl(){
   await document.fonts.ready;
   const node = document.getElementById('graphic');
-  return await window.htmlToImage.toPng(node, {pixelRatio:2, cacheBust:true, backgroundColor:'#F4EFE4', width:1080, height:node.offsetHeight});
+  return await window.htmlToImage.toPng(node, {pixelRatio:2, cacheBust:true, backgroundColor:'#F5F2EC', width:1080, height:node.offsetHeight});
 }
 
 /* ======================= HASH IMPORT ======================= */
