@@ -143,6 +143,7 @@
     <div class="navlinks">
       <a class="hidesm" href="#about">What we do</a>
       <a class="hidesm" href="#approach">Approach</a>
+      <a class="hidesm" href="#work">Work</a>
       <a class="hidesm" href="#team">The team</a>
       <a class="navcta" href="#start">Start a project</a>
     </div>
@@ -228,6 +229,44 @@
           <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="7"/><path d="M11 6.4v9.2M8.8 9.1a2 2 0 012-1.6h1a1.9 1.9 0 010 3.7h-1.4a1.9 1.9 0 000 3.7h1a2 2 0 002-1.6"/></svg></span><div class="nm">Finance</div><div class="tag">Money</div></div>
           <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="2.7"/><path d="M11 3.6v2.2M11 16.2v2.2M3.6 11h2.2M16.2 11h2.2M5.7 5.7l1.6 1.6M14.7 14.7l1.6 1.6M16.3 5.7l-1.6 1.6M7.3 14.7l-1.6 1.6"/></svg></span><div class="nm">Operations</div><div class="tag">Ops</div></div>
           <div class="node dept"><span class="avatar"><svg viewBox="0 0 22 22"><path d="M11 4v13M6.5 17h9"/><path d="M11 6L5.6 7.2 3.9 12a2.4 2.4 0 004.4 0L6.6 7.2M11 6l5.4 1.2L18.1 12a2.4 2.4 0 01-4.4 0l1.6-4.8"/></svg></span><div class="nm">Legal</div><div class="tag">Legal</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .work{background:var(--paper-2);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);}
+  .work .sub{max-width:60ch;color:var(--ink-soft);margin-top:6px;}
+  .case{display:grid;grid-template-columns:.8fr 1.2fr;gap:40px;align-items:center;margin-top:36px;background:var(--paper);border:1px solid var(--rule-strong);border-radius:22px;padding:30px;box-shadow:var(--shadow);}
+  .case .shot{position:relative;border:1px solid var(--rule);border-radius:14px;overflow:hidden;height:380px;background:var(--paper-2);}
+  .case .shot img{width:100%;display:block;}
+  .case .shot::after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(to bottom,transparent,var(--paper-2));}
+  .case .kicker{margin-bottom:12px;}
+  .case h3{font-family:'Fraunces',serif;font-weight:600;font-size:25px;letter-spacing:-.01em;color:var(--ink);margin:0 0 8px;line-height:1.1;}
+  .case p{color:var(--ink-soft);margin:0 0 8px;}
+  .case ul{list-style:none;padding:0;margin:12px 0 0;display:flex;flex-wrap:wrap;gap:8px;}
+  .case ul li{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--rule-strong);border-radius:20px;padding:5px 11px;}
+  .case .ctas{margin-top:20px;}
+  @media(max-width:760px){.case{grid-template-columns:1fr;gap:26px;padding:22px;}.case .shot{height:280px;}}
+</style>
+
+<section id="work" class="work">
+  <div class="wrap">
+    <div class="lead-label"><span class="eyebrow">Our work</span></div>
+    <h2>Built, proven, handed over.</h2>
+    <p class="sub">A look at what a Geaux AI solution actually looks like when it ships. Each one is built for a real problem, tested until it works, and handed to the client to own.</p>
+
+    <div class="case">
+      <div class="shot"><img src="assets/weekly-calendar-demo.png" alt="A weekly chapter calendar graphic, color-coded by category with an important event starred"></div>
+      <div>
+        <span class="pill kicker">Student org · Automation</span>
+        <h3>Weekly Chapter Calendar</h3>
+        <p>A fraternity president was rebuilding the week's schedule by hand every week. Now each officer submits their events through one form, and the tool turns them into a single color-coded graphic to send the chapter — important events starred, categories color-coded, one-tap image export.</p>
+        <p>No backend, no logins, free to run. The client owns it and can fine-tune it himself.</p>
+        <ul><li>Google Form intake</li><li>Auto-built graphic</li><li>PNG export</li><li>Zero cost</li></ul>
+        <div class="ctas">
+          <a class="btn btn-solid" href="week.html">Open the tool</a>
         </div>
       </div>
     </div>
