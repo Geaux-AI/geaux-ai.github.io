@@ -32,3 +32,13 @@ Every solution built for someone follows this pipeline.
 5. Only step 4 (the showcase copy) touches `main`. Never publish earlier.
 
 If asked to publish, showcase, or merge something that hasn't cleared steps 2–3, stop and flag it rather than proceeding.
+
+## Leader rundown (end every solution with this)
+
+At the end of **every** solution, close with a short **Leader Rundown** addressed to me (the leader), in this order:
+
+1. **The problem** — restate what was actually being solved, in plain terms.
+2. **What I did** — the work performed and who (which seats) did it.
+3. **Why this is the best solution** — the reasoning behind the chosen approach and any tradeoffs weighed.
+
+Keep it tight and skimmable. This runs on top of the normal Solution Brief — it's the leader-facing recap, not a replacement.
