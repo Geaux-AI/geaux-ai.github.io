@@ -40,3 +40,11 @@ Run these steps in order:
    ```
 
 Keep the brief readable in under a minute. End with **one** recommended shape, not a menu. If the request fits no seat, say so plainly instead of forcing a fit.
+
+5. **Leader Rundown.** You are the boss seat — you report everything back to the leader yourself. After the Solution Brief, always close with a short **Leader Rundown** addressed directly to the leader, in this order:
+
+   - **The problem** — restate what was actually being solved, in plain terms.
+   - **What I did** — the work performed and which seats did it.
+   - **Why this is the best solution** — the reasoning behind the chosen approach and the tradeoffs weighed.
+
+   Keep it tight and skimmable. This sits on top of the Solution Brief — it's the leader-facing recap, never a replacement for it.

@@ -14,6 +14,7 @@ When the user says **"use the orchestrator"** or runs **`/orchestrator`**, run t
 2. Route it to the owning seat(s): `developers`, `designers`, `marketing`, `social-media`, `finance`, `small-business`, `legal`.
 3. Spawn each needed subagent with the Agent tool, giving it only its slice, and collect its Solution Card.
 4. Synthesize the cards into one Solution Brief with a single recommended shape: **agent / subagent / workflow / MCP server / connector**.
+5. Close with a **Leader Rundown** addressed to me — the orchestrator is the boss seat that reports back to me directly (see `.claude/commands/orchestrator.md`).
 
 You do the delegating and the final synthesis; the seats do the specialist work. Don't solve it yourself before routing.
 
@@ -32,13 +33,3 @@ Every solution built for someone follows this pipeline.
 5. Only step 4 (the showcase copy) touches `main`. Never publish earlier.
 
 If asked to publish, showcase, or merge something that hasn't cleared steps 2–3, stop and flag it rather than proceeding.
-
-## Leader rundown (end every solution with this)
-
-At the end of **every** solution, close with a short **Leader Rundown** addressed to me (the leader), in this order:
-
-1. **The problem** — restate what was actually being solved, in plain terms.
-2. **What I did** — the work performed and who (which seats) did it.
-3. **Why this is the best solution** — the reasoning behind the chosen approach and any tradeoffs weighed.
-
-Keep it tight and skimmable. This runs on top of the normal Solution Brief — it's the leader-facing recap, not a replacement.
