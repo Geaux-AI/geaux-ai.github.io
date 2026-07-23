@@ -219,10 +219,32 @@
 
   <!-- =================== BUILDER MODE =================== -->
   <section id="builderView" style="display:none">
-    <p class="lead">You're the president. Paste the codes your chairs sent, add anything manually, then download the graphic and drop it in the chapter chat.</p>
+    <p class="lead">You're the president. Pull your chairs' submissions from your Google Form, add anything manually, then download the graphic and drop it in the chapter chat.</p>
 
     <div class="card-panel">
-      <h2>1 · Import chair codes</h2>
+      <h2>1 · Connect your Google Form <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid var(--rule-strong);border-radius:20px;padding:2px 9px;vertical-align:middle;">recommended</span></h2>
+      <p class="hint">Paste your published Google Sheet link once — the tool pulls every chair's submissions automatically, no codes to copy. <a href="#" onclick="toggleFormHelp(event)" style="color:var(--accent)">Show setup steps</a></p>
+      <div id="formHelp" style="display:none;margin-top:12px;background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px 18px;font-size:14px;color:var(--ink-soft);line-height:1.6;">
+        <ol style="margin:0;padding-left:20px;">
+          <li>Make a <b>Google Form</b> with these questions (any order): <b>Your name / chair</b>, <b>Event name</b>, <b>Day</b> (Mon–Sun), <b>Time</b>, <b>Category</b> (dropdown of the 7 categories), <b>Location</b>, <b>Important?</b> (Yes/No), and optionally <b>Week of</b> (a date).</li>
+          <li>In the Form's <b>Responses</b> tab, click <b>Link to Sheets</b> to create the results spreadsheet.</li>
+          <li>In that Sheet: <b>File → Share → Publish to web</b>, choose <b>Comma-separated values (.csv)</b>, then <b>Publish</b>. Copy that link.</li>
+          <li>Paste the link below and hit <b>Pull events</b>. Each week, send the same Form to your chairs and hit <b>Refresh</b>.</li>
+        </ol>
+      </div>
+      <div class="field" style="margin-top:14px">
+        <label for="formUrl">Published Google Sheet CSV link</label>
+        <input type="text" id="formUrl" placeholder="https://docs.google.com/spreadsheets/…/pub?output=csv" oninput="onFormUrl()">
+      </div>
+      <div class="btnrow" style="margin-top:12px">
+        <button class="btn accent" onclick="loadFromForm()">Pull events</button>
+        <button class="btn ghost" onclick="loadFromForm()">↻ Refresh</button>
+      </div>
+      <div id="formMsg" class="msg"></div>
+    </div>
+
+    <div class="card-panel">
+      <h2>Or paste chair codes <span style="color:var(--muted);font-weight:400;font-size:14px;">— backup if you're not using the form</span></h2>
       <p class="hint">Paste one code per line. Each chair's events merge into the week. (Opening a chair link auto-imports too.)</p>
       <textarea id="pasteBox" placeholder="Paste chair codes here — one per line"></textarea>
       <div class="btnrow" style="margin-top:12px">
@@ -319,6 +341,7 @@ let events = [];           // builder working set
 let chairEvents = [];      // chair's own set
 let chapterName = '';
 let weekOf = '';
+let formUrl = '';          // published Google Sheet CSV link
 let editIndex = -1;        // chair edit
 let bEditIndex = -1;       // builder edit
 
@@ -595,6 +618,150 @@ function onChapterMeta(){
   persist(); renderGraphic();
 }
 
+/* ======================= GOOGLE FORM IMPORT ======================= */
+function toggleFormHelp(e){ if(e) e.preventDefault(); const h=document.getElementById('formHelp'); h.style.display = h.style.display==='none' ? 'block' : 'none'; }
+function onFormUrl(){ formUrl = document.getElementById('formUrl').value.trim(); persist(); }
+
+// Accept a published-CSV link, a normal sheet link, or a bare sheet id.
+function normalizeSheetUrl(u){
+  u = (u||'').trim();
+  if(!u) return '';
+  if(/output=csv/.test(u) || /tqx=out:csv/.test(u)) return u;           // already CSV
+  let m = u.match(/\/spreadsheets\/d\/e\/([a-zA-Z0-9\-_]+)/);            // published /d/e/ id
+  if(m) return `https://docs.google.com/spreadsheets/d/e/${m[1]}/pub?output=csv`;
+  m = u.match(/\/spreadsheets\/d\/([a-zA-Z0-9\-_]+)/);                   // normal /d/ id
+  if(m) return `https://docs.google.com/spreadsheets/d/${m[1]}/gviz/tq?tqx=out:csv`;
+  if(/^[a-zA-Z0-9\-_]{20,}$/.test(u)) return `https://docs.google.com/spreadsheets/d/${u}/gviz/tq?tqx=out:csv`;
+  return u;
+}
+
+// Minimal RFC-4180 CSV parser (handles quotes, commas, and newlines inside fields).
+function parseCsv(text){
+  const rows=[]; let row=[], field='', q=false;
+  text = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(q){
+      if(ch==='"'){ if(text[i+1]==='"'){ field+='"'; i++; } else { q=false; } }
+      else field+=ch;
+    } else {
+      if(ch==='"') q=true;
+      else if(ch===',') { row.push(field); field=''; }
+      else if(ch==='\n'){ row.push(field); rows.push(row); row=[]; field=''; }
+      else field+=ch;
+    }
+  }
+  row.push(field); rows.push(row);
+  return rows;
+}
+
+function mapHeaders(head){
+  const has=(h,...k)=>k.some(x=>h.includes(x));
+  const col={chair:-1,name:-1,day:-1,time:-1,cat:-1,loc:-1,important:-1,week:-1};
+  col.chair = head.findIndex(h=>has(h,'chair','officer','position','submitted by','your name'));
+  col.name  = head.findIndex((h,i)=>i!==col.chair && has(h,'event','title'));
+  if(col.name<0) col.name = head.findIndex((h,i)=>i!==col.chair && h.includes('name'));
+  if(col.name<0) col.name = head.findIndex(h=>has(h,'what'));
+  col.day       = head.findIndex(h=>h.includes('day'));
+  col.time      = head.findIndex(h=>h.includes('time'));
+  col.cat       = head.findIndex(h=>has(h,'categ','type'));
+  col.loc       = head.findIndex(h=>has(h,'location','where','place','room','venue','building'));
+  col.important = head.findIndex(h=>has(h,'important','priorit','highlight','star','urgent','can\'t miss','cant miss'));
+  col.week      = head.findIndex(h=>h.includes('week') && !h.includes('day')); // avoid "day of week"
+  return col;
+}
+
+const DAY_MAP={mon:'Mon',tue:'Tue',wed:'Wed',thu:'Thu',fri:'Fri',sat:'Sat',sun:'Sun'};
+function matchDay(s){ return DAY_MAP[String(s||'').trim().toLowerCase().slice(0,3)] || ''; }
+
+const CAT_SYNONYMS=[
+  ['chapter meeting','meeting','chapter'],          // 0
+  ['brotherhood','brother','bro'],                  // 1
+  ['philanthropy','service','community','volunteer'],// 2
+  ['recruitment','recruit','rush'],                 // 3
+  ['social','mixer','party','formal','date'],       // 4
+  ['academic','professional','study','career','tutor'], // 5
+  ['sigep meals','meals','meal','dinner','lunch','food','balanced man'] // 6
+];
+function matchCat(s){
+  const q=String(s||'').trim().toLowerCase();
+  if(!q) return 0;
+  let i=CATS.findIndex(c=>c.name.toLowerCase()===q);
+  if(i>=0) return i;
+  for(let k=0;k<CAT_SYNONYMS.length;k++){ if(CAT_SYNONYMS[k].some(w=>q.includes(w))) return k; }
+  return 0;
+}
+function truthy(s){
+  const q=String(s||'').trim().toLowerCase();
+  if(!q) return false;
+  return ['yes','y','true','1','x','⭐','star','high','important'].includes(q) || q.includes('yes') || q.includes('important') || q.includes('star');
+}
+function parseDate(s){
+  s=String(s||'').trim(); if(!s) return null;
+  let m;
+  if(m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)) return new Date(+m[1],+m[2]-1,+m[3]);
+  if(m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})/)){ let y=+m[3]; if(y<100) y+=2000; return new Date(y,+m[1]-1,+m[2]); }
+  const d=new Date(s); return isNaN(d.getTime())?null:d;
+}
+function weekKey(s){
+  const d=parseDate(s); if(!d) return '';
+  const off=(d.getDay()+6)%7;            // Monday = 0
+  d.setDate(d.getDate()-off);
+  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+
+// Parse CSV text into events, replacing any previously form-sourced events.
+function ingestCsv(text){
+  const rows=parseCsv(text).filter(r=>r.some(c=>String(c).trim()!==''));
+  if(rows.length<2) return {added:0, skipped:0, noname:false};
+  const head=rows[0].map(h=>String(h).trim().toLowerCase());
+  const col=mapHeaders(head);
+  if(col.name<0 && col.day<0) return {added:0, skipped:0, noname:true};
+  const wk=document.getElementById('b_weekof').value;
+  const wantWeek = (col.week>=0 && wk) ? weekKey(wk) : '';
+  events = events.filter(e=>e.src!=='form');   // clear old form pull, keep manual/code events
+  let added=0, skipped=0;
+  for(let r=1;r<rows.length;r++){
+    const cells=rows[r];
+    const get=k=> col[k]>=0 ? String(cells[col[k]]==null?'':cells[col[k]]) : '';
+    const name=get('name').trim();
+    const day=matchDay(get('day'));
+    if(!name || !day){ skipped++; continue; }
+    if(wantWeek){ const rw=weekKey(get('week')); if(rw && rw!==wantWeek) continue; } // other weeks: skip quietly
+    events.push({
+      name:name.slice(0,120), day,
+      time:get('time').trim().slice(0,40),
+      cat:matchCat(get('cat')),
+      loc:get('loc').trim().slice(0,80),
+      important:truthy(get('important')),
+      chair:get('chair').trim().slice(0,60),
+      src:'form'
+    });
+    added++;
+  }
+  return {added, skipped, noname:false};
+}
+
+async function loadFromForm(quiet){
+  const url=normalizeSheetUrl(document.getElementById('formUrl').value);
+  if(!url){ if(!quiet) showMsg('formMsg','Paste your published Google Sheet link first.','err'); return; }
+  if(!quiet) showMsg('formMsg','Pulling…','');
+  try{
+    const res=await fetch(url,{redirect:'follow'});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const text=await res.text();
+    if(/^\s*</.test(text)) throw new Error('got HTML, not CSV'); // login/permission page
+    const {added, skipped, noname}=ingestCsv(text);
+    formUrl=document.getElementById('formUrl').value.trim();
+    persist(); renderBuilderList(); renderGraphic();
+    if(noname){ showMsg('formMsg',"Connected, but couldn't find an Event and Day column. Check your Form question names.",'err'); return; }
+    if(added) showMsg('formMsg',`Loaded ${added} event${added!==1?'s':''} from your form.${skipped?` (${skipped} row(s) skipped — missing a day or event name.)`:''}`,'ok');
+    else showMsg('formMsg',`Connected — no events yet${skipped?`; ${skipped} row(s) were missing a day or name`:''}. Once chairs submit, hit Refresh.`,'ok');
+  }catch(err){
+    if(!quiet) showMsg('formMsg',"Couldn't read the sheet. In Google Sheets use File → Share → Publish to web → CSV (not just 'Share'), and paste THAT link here.",'err');
+  }
+}
+
 function clearAll(){
   if(!confirm('Clear ALL events, chapter name, and week-of date? This cannot be undone.')) return;
   events=[]; chapterName=''; weekOf=''; bEditIndex=-1;
@@ -607,17 +774,19 @@ function clearAll(){
 
 /* ======================= PERSISTENCE ======================= */
 function persist(){
-  try{ localStorage.setItem(LS_KEY, JSON.stringify({events, chapterName, weekOf})); }catch(e){}
+  try{ localStorage.setItem(LS_KEY, JSON.stringify({events, chapterName, weekOf, formUrl})); }catch(e){}
 }
 function restore(){
   try{
     const raw = localStorage.getItem(LS_KEY);
     if(!raw) return;
     const o = JSON.parse(raw);
-    if(Array.isArray(o.events)) events = o.events.map(e=>unpackEvent(packEvent(e), e.chair));
-    chapterName = o.chapterName||''; weekOf = o.weekOf||'';
+    if(Array.isArray(o.events)) events = o.events.map(e=>{ const u = unpackEvent(packEvent(e), e.chair); u.src = e.src||''; return u; });
+    chapterName = o.chapterName||''; weekOf = o.weekOf||''; formUrl = o.formUrl||'';
     document.getElementById('b_chapter').value = chapterName;
     document.getElementById('b_weekof').value = weekOf;
+    const fu = document.getElementById('formUrl'); if(fu) fu.value = formUrl;
+    if(formUrl) loadFromForm(true); // auto-refresh from the form on open (quiet)
   }catch(e){}
 }
 
