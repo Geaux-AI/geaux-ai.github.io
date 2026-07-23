@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Chapter Calendar · Geaux AI</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4EFE4; --paper-2:#FBF8F1; --ink:#211E18; --ink-soft:#463F35;
+    --muted:#8A8071; --rule:#E3DACA; --rule-strong:#D6CBB6;
+    --accent:#B6662A; --accent-soft:#C67C3E;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent)}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+  .wrap{max-width:920px;margin:0 auto;padding:24px 18px 80px}
+
+  /* ---- Top bar / mode toggle ---- */
+  .topbar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:8px}
+  .brand{font-family:'Fraunces',serif;font-weight:600;font-size:22px}
+  .brand span{color:var(--accent)}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.24em;color:var(--accent)}
+  .toggle{display:inline-flex;background:var(--paper-2);border:1px solid var(--rule-strong);border-radius:999px;padding:4px;margin-left:auto}
+  .toggle button{
+    font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.08em;
+    border:none;background:transparent;color:var(--ink-soft);padding:8px 16px;border-radius:999px;cursor:pointer;
+  }
+  .toggle button.active{background:var(--accent);color:var(--paper)}
+  .lead{color:var(--ink-soft);font-size:15px;margin:4px 0 22px;max-width:640px}
+
+  .card-panel{background:var(--paper-2);border:1px solid var(--rule);border-radius:16px;padding:22px;margin-bottom:20px}
+  .card-panel h2{font-family:'Fraunces',serif;font-weight:600;font-size:22px;margin:0 0 4px}
+  .card-panel .hint{color:var(--muted);font-size:13.5px;margin:0 0 18px}
+
+  label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin:0 0 6px}
+  input[type=text],input[type=time],input[type=date],select,textarea{
+    width:100%;font-family:'Inter',sans-serif;font-size:15px;color:var(--ink);
+    background:#fff;border:1px solid var(--rule-strong);border-radius:10px;padding:11px 12px;
+  }
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--accent-soft);outline-offset:1px;border-color:var(--accent)}
+  textarea{resize:vertical;min-height:96px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.55}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .field{margin-bottom:14px}
+  .check{display:flex;align-items:center;gap:9px;margin:2px 0 0}
+  .check input{width:18px;height:18px;accent-color:var(--accent)}
+  .check label{margin:0;text-transform:none;letter-spacing:0;font-family:'Inter',sans-serif;font-size:14px;color:var(--ink);cursor:pointer}
+
+  .btn{
+    font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.03em;
+    border:1px solid var(--ink);background:var(--ink);color:var(--paper);
+    padding:11px 18px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+  }
+  .btn:hover{background:var(--ink-soft);border-color:var(--ink-soft)}
+  .btn.accent{background:var(--accent);border-color:var(--accent)}
+  .btn.accent:hover{background:var(--accent-soft);border-color:var(--accent-soft)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
+  .btn.ghost:hover{background:var(--paper);border-color:var(--ink-soft)}
+  .btn.danger{background:transparent;color:#7A2E33;border-color:#d8b5b8}
+  .btn.danger:hover{background:#7A2E33;color:#fff;border-color:#7A2E33}
+  .btn.sm{padding:7px 12px;font-size:12px;border-radius:8px}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+
+  /* ---- event list rows ---- */
+  .evlist{list-style:none;margin:16px 0 0;padding:0}
+  .evrow{display:flex;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--rule);border-radius:10px;background:#fff;margin-bottom:8px}
+  .evrow .bar{width:4px;align-self:stretch;border-radius:3px;flex:0 0 4px}
+  .evrow .meta{flex:1;min-width:0}
+  .evrow .meta b{font-family:'Fraunces',serif;font-weight:600;font-size:16px;display:block;line-height:1.25}
+  .evrow .meta small{color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace}
+  .evrow .star{color:var(--accent)}
+  .evrow .acts{display:flex;gap:6px;flex:0 0 auto}
+  .empty-note{color:var(--muted);font-size:14px;font-style:italic;font-family:'Fraunces',serif;margin:14px 0 0}
+
+  .codebox{width:100%;font-family:'JetBrains Mono',monospace;font-size:12px;background:#fff;border:1px dashed var(--rule-strong);border-radius:10px;padding:12px;word-break:break-all;color:var(--ink-soft);max-height:120px;overflow:auto}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);font-family:'JetBrains Mono',monospace;font-size:13px;padding:11px 18px;border-radius:10px;opacity:0;pointer-events:none;transition:.25s;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .divider{height:1px;background:var(--rule);border:0;margin:22px 0}
+  .msg{font-size:13.5px;padding:10px 12px;border-radius:9px;margin-top:12px;display:none}
+  .msg.err{background:#f6e4e0;color:#7A2E33;border:1px solid #e6c3bc;display:block}
+  .msg.ok{background:#e6efe4;color:#3B5B3E;border:1px solid #c8ddc6;display:block}
+
+  /* ---- preview scaler ---- */
+  .preview-shell{border:1px solid var(--rule);border-radius:16px;background:var(--paper);padding:16px;overflow:hidden}
+  .preview-scale{transform-origin:top left}
+
+  /* =========================================================
+     THE GRAPHIC — export target, fixed 1080px
+     ========================================================= */
+  #graphic{
+    width:1080px;background:var(--paper);color:var(--ink);
+    font-family:'Inter',sans-serif;padding:0 56px 0;
+  }
+  #graphic .g-header{padding:44px 0 30px}
+  #graphic .g-chapter{font-family:'Fraunces',serif;font-weight:600;font-size:40px;line-height:1.1;color:var(--ink);margin:0}
+  #graphic .g-weekof{font-family:'JetBrains Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:.24em;color:var(--accent);margin:14px 0 0}
+  #graphic .g-legend{display:flex;flex-wrap:wrap;gap:10px 26px;padding:22px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  #graphic .g-legitem{display:inline-flex;align-items:center;gap:8px}
+  #graphic .g-dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}
+  #graphic .g-leglabel{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft)}
+  #graphic .g-body{padding:34px 0 6px}
+  #graphic .g-day{margin-bottom:28px}
+  #graphic .g-day:last-child{margin-bottom:0}
+  #graphic .g-daylabel{display:flex;align-items:center;gap:16px;margin:0 0 14px}
+  #graphic .g-daylabel span{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:14px;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-soft);white-space:nowrap}
+  #graphic .g-daylabel .line{height:1px;background:var(--rule);flex:1}
+  #graphic .g-cards{display:flex;flex-direction:column;gap:8px}
+
+  #graphic .g-card{position:relative;background:var(--paper-2);border:1px solid var(--rule);border-radius:14px;padding:17px 18px 17px 22px}
+  #graphic .g-card .g-leftbar{position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:14px 0 0 14px}
+  #graphic .g-cardtop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:9px}
+  #graphic .g-chip{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:4px 10px;border-radius:999px;white-space:nowrap}
+  #graphic .g-time{font-family:'Inter',sans-serif;font-weight:500;font-size:13px;color:var(--muted);white-space:nowrap}
+  #graphic .g-name{font-family:'Fraunces',serif;font-weight:600;font-size:20px;line-height:1.2;color:var(--ink);margin:0}
+  #graphic .g-loc{font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);margin:6px 0 0}
+
+  #graphic .g-card.imp{border:2px solid var(--accent);background:linear-gradient(rgba(182,102,42,.07),rgba(182,102,42,.07)),var(--paper-2);box-shadow:0 10px 26px -18px rgba(182,102,42,.5)}
+  #graphic .g-star{position:absolute;top:-9px;right:-9px;width:20px;height:20px;border-radius:50%;background:var(--accent);color:var(--paper);display:flex;align-items:center;justify-content:center;font-size:12px;line-height:1}
+
+  #graphic .g-emptyday{border:1px dashed var(--rule);border-radius:12px;height:36px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:var(--muted)}
+  #graphic .g-footer{padding:22px 0 34px;border-top:1px solid var(--rule);margin-top:32px}
+  #graphic .g-footer span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.04em}
+
+  @media (max-width:560px){ .grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div>
+      <div class="brand">Geaux <span>AI</span></div>
+      <div class="eyebrow">Weekly Chapter Calendar</div>
+    </div>
+    <div class="toggle" role="tablist">
+      <button id="tabChair" class="active" onclick="setMode('chair')">Chair</button>
+      <button id="tabBuilder" onclick="setMode('builder')">President</button>
+    </div>
+  </div>
+
+  <!-- =================== CHAIR MODE =================== -->
+  <section id="chairView">
+    <p class="lead">You're a chair. Add your events for the week, then send the code back to the president in the group chat. Takes 30 seconds.</p>
+
+    <div class="card-panel">
+      <h2>Add an event</h2>
+      <p class="hint">Add as many as you need. Everything you add is listed below.</p>
+
+      <div class="field">
+        <label for="c_chair">Your name / role (so the president knows who submitted)</label>
+        <input type="text" id="c_chair" placeholder="e.g. Jordan · Recruitment Chair">
+      </div>
+
+      <div class="field">
+        <label for="f_name">Event name</label>
+        <input type="text" id="f_name" placeholder="e.g. Chapter Meeting">
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="f_day">Day</label>
+          <select id="f_day"></select>
+        </div>
+        <div class="field">
+          <label for="f_cat">Category</label>
+          <select id="f_cat"></select>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="f_time">Time</label>
+          <input type="text" id="f_time" placeholder='e.g. 7:00 PM  ·  or "All day"'>
+        </div>
+        <div class="field">
+          <label for="f_loc">Location <span style="text-transform:none;letter-spacing:0;color:var(--muted)">(optional)</span></label>
+          <input type="text" id="f_loc" placeholder="e.g. Union Room 210">
+        </div>
+      </div>
+
+      <div class="check">
+        <input type="checkbox" id="f_imp">
+        <label for="f_imp">⭐ Super important — highlight this event</label>
+      </div>
+
+      <div class="btnrow" style="margin-top:16px">
+        <button class="btn accent" onclick="chairAdd()" id="addBtn">+ Add event</button>
+        <button class="btn ghost" onclick="chairCancelEdit()" id="cancelEditBtn" style="display:none">Cancel edit</button>
+      </div>
+      <div id="chairMsg" class="msg"></div>
+
+      <ul class="evlist" id="chairList"></ul>
+    </div>
+
+    <div class="card-panel" id="chairSendPanel" style="display:none">
+      <h2>Send to president</h2>
+      <p class="hint">Copy the code (or link) and paste it back to the president in the group chat.</p>
+      <label>Your code</label>
+      <div class="codebox" id="chairCode"></div>
+      <div class="btnrow" style="margin-top:12px">
+        <button class="btn accent" onclick="copyChairCode()">Copy code</button>
+        <button class="btn ghost" onclick="copyChairLink()">Copy link</button>
+        <button class="btn ghost" onclick="smsChair()">Text it</button>
+        <button class="btn ghost" onclick="mailChair()">Email it</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== BUILDER MODE =================== -->
+  <section id="builderView" style="display:none">
+    <p class="lead">You're the president. Paste the codes your chairs sent, add anything manually, then download the graphic and drop it in the chapter chat.</p>
+
+    <div class="card-panel">
+      <h2>1 · Import chair codes</h2>
+      <p class="hint">Paste one code per line. Each chair's events merge into the week. (Opening a chair link auto-imports too.)</p>
+      <textarea id="pasteBox" placeholder="Paste chair codes here — one per line"></textarea>
+      <div class="btnrow" style="margin-top:12px">
+        <button class="btn accent" onclick="mergeCodes()">Load / Merge</button>
+        <button class="btn ghost" onclick="document.getElementById('pasteBox').value=''">Clear box</button>
+      </div>
+      <div id="mergeMsg" class="msg"></div>
+    </div>
+
+    <div class="card-panel">
+      <h2>2 · Chapter details</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="b_chapter">Chapter name</label>
+          <input type="text" id="b_chapter" placeholder="e.g. SigEp · Louisiana Beta" oninput="onChapterMeta()">
+        </div>
+        <div class="field">
+          <label for="b_weekof">Week of</label>
+          <input type="date" id="b_weekof" oninput="onChapterMeta()">
+        </div>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <h2>3 · Events</h2>
+      <p class="hint">Add or edit anything by hand. Everything below is what goes on the graphic.</p>
+
+      <div class="field">
+        <label for="m_name">Event name</label>
+        <input type="text" id="m_name" placeholder="Event name">
+      </div>
+      <div class="grid">
+        <div class="field"><label for="m_day">Day</label><select id="m_day"></select></div>
+        <div class="field"><label for="m_cat">Category</label><select id="m_cat"></select></div>
+      </div>
+      <div class="grid">
+        <div class="field"><label for="m_time">Time</label><input type="text" id="m_time" placeholder='7:00 PM or "All day"'></div>
+        <div class="field"><label for="m_loc">Location (optional)</label><input type="text" id="m_loc" placeholder="Location"></div>
+      </div>
+      <div class="check"><input type="checkbox" id="m_imp"><label for="m_imp">⭐ Super important</label></div>
+      <div class="btnrow" style="margin-top:16px">
+        <button class="btn accent" onclick="builderAdd()" id="bAddBtn">+ Add event</button>
+        <button class="btn ghost" onclick="builderCancelEdit()" id="bCancelBtn" style="display:none">Cancel edit</button>
+      </div>
+      <div id="builderMsg" class="msg"></div>
+
+      <ul class="evlist" id="builderList"></ul>
+
+      <hr class="divider">
+      <div class="btnrow">
+        <button class="btn danger" onclick="clearAll()">Clear all</button>
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <h2>4 · Preview &amp; download</h2>
+      <p class="hint">This is exactly what exports. Download the PNG and post it to the chapter.</p>
+      <div class="btnrow" style="margin-bottom:16px">
+        <button class="btn accent" onclick="downloadPng()" id="pngBtn">⬇ Download PNG</button>
+      </div>
+      <div id="pngMsg" class="msg"></div>
+
+      <div class="preview-shell">
+        <div class="preview-scale" id="previewScale">
+          <!-- graphic injected here -->
+          <div id="graphic"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script>
+/* ======================= CONFIG ======================= */
+const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const DAY_FULL = {Mon:'Monday',Tue:'Tuesday',Wed:'Wednesday',Thu:'Thursday',Fri:'Friday',Sat:'Saturday',Sun:'Sunday'};
+const CATS = [
+  {name:'Chapter Meeting',        bg:'#3B4A5A', fg:'#F4EFE4'},
+  {name:'Brotherhood',            bg:'#4C6B4F', fg:'#F4EFE4'},
+  {name:'Philanthropy / Service', bg:'#2F6B66', fg:'#F4EFE4'},
+  {name:'Recruitment',            bg:'#BC9A45', fg:'#211E18'},
+  {name:'Social',                 bg:'#7A2E33', fg:'#F4EFE4'},
+  {name:'Academic / Professional',bg:'#5B4870', fg:'#F4EFE4'},
+  {name:'SigEp Meals',            bg:'#EAD9BE', fg:'#463F35'},
+];
+const LS_KEY = 'geaux_week_v1';
+
+/* ======================= STATE ======================= */
+let events = [];           // builder working set
+let chairEvents = [];      // chair's own set
+let chapterName = '';
+let weekOf = '';
+let editIndex = -1;        // chair edit
+let bEditIndex = -1;       // builder edit
+
+/* ======================= ENCODING (unicode-safe base64url) ======================= */
+function b64urlEncode(str){
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for(const b of bytes) bin += String.fromCharCode(b);
+  return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64urlDecode(code){
+  let b64 = code.trim().replace(/-/g,'+').replace(/_/g,'/');
+  while(b64.length % 4) b64 += '=';
+  const bin = atob(b64);
+  const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+// event -> compact tuple; keep keys short
+function packEvent(e){
+  return {n:e.name, d:e.day, t:e.time||'', c:e.cat, l:e.loc||'', i:e.important?1:0};
+}
+function unpackEvent(o, chair){
+  return {
+    name: String(o.n||'').slice(0,120),
+    day: DAYS.includes(o.d)? o.d : 'Mon',
+    time: String(o.t||'').slice(0,40),
+    cat: (typeof o.c==='number' && o.c>=0 && o.c<CATS.length)? o.c : 0,
+    loc: String(o.l||'').slice(0,80),
+    important: !!o.i,
+    chair: chair || o.by || ''
+  };
+}
+function encodeChair(name, evs){
+  const payload = {v:1, by:name||'', e:evs.map(packEvent)};
+  return b64urlEncode(JSON.stringify(payload));
+}
+function decodeChair(code){
+  const obj = JSON.parse(b64urlDecode(code));
+  const by = obj.by || '';
+  const arr = Array.isArray(obj.e) ? obj.e : [];
+  return arr.map(o => unpackEvent(o, by));
+}
+
+/* ======================= TIME PARSING / SORT ======================= */
+function timeToMinutes(t){
+  if(!t) return 100000; // no time -> after all-day but keep stable-ish; treated below
+  const s = t.trim().toLowerCase();
+  if(s === 'all day' || s === 'allday') return -1;
+  // 24h "19:30" or "07:00"
+  let m = s.match(/^(\d{1,2}):(\d{2})\s*(am|pm)?$/);
+  if(m){
+    let h = parseInt(m[1],10), min = parseInt(m[2],10);
+    const ap = m[3];
+    if(ap){ if(ap==='pm' && h<12) h+=12; if(ap==='am' && h===12) h=0; }
+    return h*60+min;
+  }
+  // "7pm" / "7 pm" / "10am"
+  m = s.match(/^(\d{1,2})\s*(am|pm)$/);
+  if(m){
+    let h = parseInt(m[1],10); const ap=m[2];
+    if(ap==='pm' && h<12) h+=12; if(ap==='am' && h===12) h=0;
+    return h*60;
+  }
+  return 99999; // unparseable -> sort to end
+}
+function sortDayEvents(list){
+  return list.slice().sort((a,b)=>{
+    const ta=timeToMinutes(a.time), tb=timeToMinutes(b.time);
+    if(ta!==tb) return ta-tb;
+    return a.name.localeCompare(b.name);
+  });
+}
+
+/* ======================= FORMAT ======================= */
+function fmtWeekOf(iso){
+  if(!iso) return '';
+  const [y,mo,d] = iso.split('-').map(Number);
+  const dt = new Date(y, mo-1, d);
+  return dt.toLocaleDateString('en-US',{month:'long', day:'numeric', year:'numeric'});
+}
+function todayStr(){
+  return new Date().toLocaleDateString('en-US',{month:'short', day:'numeric', year:'numeric'});
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* ======================= INIT DOM ======================= */
+function fillSelects(){
+  const dayOpts = DAYS.map(d=>`<option value="${d}">${DAY_FULL[d]}</option>`).join('');
+  const catOpts = CATS.map((c,i)=>`<option value="${i}">${c.name}</option>`).join('');
+  ['f_day','m_day'].forEach(id=>document.getElementById(id).innerHTML=dayOpts);
+  ['f_cat','m_cat'].forEach(id=>document.getElementById(id).innerHTML=catOpts);
+}
+
+/* ======================= MODE ======================= */
+function setMode(mode){
+  const chair = mode==='chair';
+  document.getElementById('chairView').style.display = chair?'block':'none';
+  document.getElementById('builderView').style.display = chair?'none':'block';
+  document.getElementById('tabChair').classList.toggle('active', chair);
+  document.getElementById('tabBuilder').classList.toggle('active', !chair);
+  if(!chair) renderGraphic();
+}
+
+/* ======================= TOAST / MSG ======================= */
+let toastT;
+function toast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove('show'), 1800);
+}
+function showMsg(id, text, kind){
+  const el = document.getElementById(id);
+  el.textContent = text; el.className = 'msg ' + (kind||'');
+  if(kind) setTimeout(()=>{ if(el.textContent===text){ el.className='msg'; } }, 6000);
+}
+
+/* ======================= CHAIR MODE LOGIC ======================= */
+function readForm(prefix){
+  const g = id=>document.getElementById(prefix+id);
+  return {
+    name: g('name').value.trim(),
+    day: g('day').value,
+    cat: parseInt(g('cat').value,10),
+    time: g('time').value.trim(),
+    loc: g('loc').value.trim(),
+    important: g('imp').checked
+  };
+}
+function clearForm(prefix){
+  const g = id=>document.getElementById(prefix+id);
+  g('name').value=''; g('time').value=''; g('loc').value=''; g('imp').checked=false;
+}
+function chairAdd(){
+  const ev = readForm('f_');
+  if(!ev.name){ showMsg('chairMsg','Add an event name first.','err'); return; }
+  if(editIndex>=0){ chairEvents[editIndex]=ev; editIndex=-1;
+    document.getElementById('addBtn').textContent='+ Add event';
+    document.getElementById('cancelEditBtn').style.display='none';
+  } else { chairEvents.push(ev); }
+  clearForm('f_');
+  renderChairList(); updateChairCode();
+  showMsg('chairMsg','Added — add another or send below.','ok');
+}
+function chairEdit(i){
+  const e = chairEvents[i]; const g = id=>document.getElementById('f_'+id);
+  g('name').value=e.name; g('day').value=e.day; g('cat').value=e.cat;
+  g('time').value=e.time; g('loc').value=e.loc; g('imp').checked=e.important;
+  editIndex=i;
+  document.getElementById('addBtn').textContent='Save changes';
+  document.getElementById('cancelEditBtn').style.display='inline-flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function chairCancelEdit(){
+  editIndex=-1; clearForm('f_');
+  document.getElementById('addBtn').textContent='+ Add event';
+  document.getElementById('cancelEditBtn').style.display='none';
+}
+function chairDelete(i){ chairEvents.splice(i,1); if(editIndex===i) chairCancelEdit(); renderChairList(); updateChairCode(); }
+
+function renderChairList(){
+  const ul = document.getElementById('chairList');
+  if(!chairEvents.length){ ul.innerHTML = '<p class="empty-note">No events added yet.</p>'; document.getElementById('chairSendPanel').style.display='none'; return; }
+  ul.innerHTML = chairEvents.map((e,i)=>rowHtml(e,i,'chair')).join('');
+  document.getElementById('chairSendPanel').style.display='block';
+}
+function updateChairCode(){
+  const name = document.getElementById('c_chair').value.trim();
+  if(!chairEvents.length){ document.getElementById('chairCode').textContent=''; return; }
+  const code = encodeChair(name, chairEvents);
+  document.getElementById('chairCode').textContent = code;
+}
+document.addEventListener('input', e=>{ if(e.target && e.target.id==='c_chair') updateChairCode(); });
+
+function currentChairCode(){ return document.getElementById('chairCode').textContent.trim(); }
+function chairLink(){ return location.origin + location.pathname + '#load=' + currentChairCode(); }
+function copyChairCode(){ const c=currentChairCode(); if(!c){toast('Add an event first');return;} copyText(c,'Code copied'); }
+function copyChairLink(){ const c=currentChairCode(); if(!c){toast('Add an event first');return;} copyText(chairLink(),'Link copied'); }
+function smsChair(){ const c=currentChairCode(); if(!c){toast('Add an event first');return;}
+  const body = encodeURIComponent('Here are my chapter events for the week:\n'+chairLink());
+  location.href = 'sms:?&body='+body;
+}
+function mailChair(){ const c=currentChairCode(); if(!c){toast('Add an event first');return;}
+  const body = encodeURIComponent('Here are my chapter events for the week.\n\nLink: '+chairLink()+'\n\nOr paste this code:\n'+c);
+  location.href = 'mailto:?subject='+encodeURIComponent('Chapter events for the week')+'&body='+body;
+}
+
+/* shared row html */
+function rowHtml(e,i,scope){
+  const c = CATS[e.cat];
+  const t = e.time ? e.time : 'No time';
+  const star = e.important ? ' <span class="star">★</span>' : '';
+  const loc = e.loc ? ' · '+esc(e.loc) : '';
+  const editFn = scope==='chair'?`chairEdit(${i})`:`builderEdit(${i})`;
+  const delFn  = scope==='chair'?`chairDelete(${i})`:`builderDelete(${i})`;
+  const chairTag = (scope==='builder' && e.chair) ? ` <span style="color:var(--muted)">· ${esc(e.chair)}</span>` : '';
+  return `<li class="evrow">
+    <span class="bar" style="background:${c.bg}"></span>
+    <span class="meta">
+      <b>${esc(e.name)}${star}</b>
+      <small>${DAY_FULL[e.day]} · ${esc(t)} · ${esc(c.name)}${loc}${chairTag}</small>
+    </span>
+    <span class="acts">
+      <button class="btn ghost sm" onclick="${editFn}">Edit</button>
+      <button class="btn danger sm" onclick="${delFn}">✕</button>
+    </span>
+  </li>`;
+}
+
+/* ======================= BUILDER MODE LOGIC ======================= */
+function builderAdd(){
+  const ev = readForm('m_');
+  if(!ev.name){ showMsg('builderMsg','Add an event name first.','err'); return; }
+  ev.chair = bEditIndex>=0 ? (events[bEditIndex].chair||'') : '';
+  if(bEditIndex>=0){ events[bEditIndex]=ev; bEditIndex=-1;
+    document.getElementById('bAddBtn').textContent='+ Add event';
+    document.getElementById('bCancelBtn').style.display='none';
+  } else { events.push(ev); }
+  clearForm('m_'); persist(); renderBuilderList(); renderGraphic();
+  showMsg('builderMsg','Saved.','ok');
+}
+function builderEdit(i){
+  const e = events[i]; const g=id=>document.getElementById('m_'+id);
+  g('name').value=e.name; g('day').value=e.day; g('cat').value=e.cat;
+  g('time').value=e.time; g('loc').value=e.loc; g('imp').checked=e.important;
+  bEditIndex=i;
+  document.getElementById('bAddBtn').textContent='Save changes';
+  document.getElementById('bCancelBtn').style.display='inline-flex';
+}
+function builderCancelEdit(){
+  bEditIndex=-1; clearForm('m_');
+  document.getElementById('bAddBtn').textContent='+ Add event';
+  document.getElementById('bCancelBtn').style.display='none';
+}
+function builderDelete(i){ events.splice(i,1); if(bEditIndex===i) builderCancelEdit(); persist(); renderBuilderList(); renderGraphic(); }
+
+function renderBuilderList(){
+  const ul = document.getElementById('builderList');
+  if(!events.length){ ul.innerHTML='<p class="empty-note">No events yet. Import chair codes or add them above.</p>'; return; }
+  // show grouped by day order for sanity
+  const order = {}; DAYS.forEach((d,i)=>order[d]=i);
+  const idx = events.map((e,i)=>i).sort((a,b)=>{
+    if(order[events[a].day]!==order[events[b].day]) return order[events[a].day]-order[events[b].day];
+    return timeToMinutes(events[a].time)-timeToMinutes(events[b].time);
+  });
+  ul.innerHTML = idx.map(i=>rowHtml(events[i],i,'builder')).join('');
+}
+
+function mergeCodes(){
+  const raw = document.getElementById('pasteBox').value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  if(!raw.length){ showMsg('mergeMsg','Paste at least one code.','err'); return; }
+  let added=0, bad=0;
+  for(const code of raw){
+    try{
+      const decoded = decodeChair(stripLoad(code));
+      decoded.forEach(e=>{ events.push(e); added++; });
+    }catch(err){ bad++; }
+  }
+  persist(); renderBuilderList(); renderGraphic();
+  document.getElementById('pasteBox').value='';
+  if(added && !bad) showMsg('mergeMsg',`Imported ${added} event${added!==1?'s':''}.`,'ok');
+  else if(added && bad) showMsg('mergeMsg',`Imported ${added} event(s); ${bad} code(s) couldn't be read.`,'ok');
+  else showMsg('mergeMsg',`Couldn't read that code. Make sure you pasted the whole thing.`,'err');
+}
+// allow pasting a full link or "load=xxx"
+function stripLoad(s){
+  const m = s.match(/#?load=([^\s&]+)/);
+  if(m) return m[1];
+  return s;
+}
+
+function onChapterMeta(){
+  chapterName = document.getElementById('b_chapter').value;
+  weekOf = document.getElementById('b_weekof').value;
+  persist(); renderGraphic();
+}
+
+function clearAll(){
+  if(!confirm('Clear ALL events, chapter name, and week-of date? This cannot be undone.')) return;
+  events=[]; chapterName=''; weekOf=''; bEditIndex=-1;
+  document.getElementById('b_chapter').value='';
+  document.getElementById('b_weekof').value='';
+  builderCancelEdit();
+  persist(); renderBuilderList(); renderGraphic();
+  toast('Cleared');
+}
+
+/* ======================= PERSISTENCE ======================= */
+function persist(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify({events, chapterName, weekOf})); }catch(e){}
+}
+function restore(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return;
+    const o = JSON.parse(raw);
+    if(Array.isArray(o.events)) events = o.events.map(e=>unpackEvent(packEvent(e), e.chair));
+    chapterName = o.chapterName||''; weekOf = o.weekOf||'';
+    document.getElementById('b_chapter').value = chapterName;
+    document.getElementById('b_weekof').value = weekOf;
+  }catch(e){}
+}
+
+/* ======================= GRAPHIC RENDER ======================= */
+function renderGraphic(){
+  const g = document.getElementById('graphic');
+  const title = chapterName.trim() || 'Chapter Name';
+  const weekLabel = weekOf ? fmtWeekOf(weekOf) : 'THIS WEEK';
+
+  // categories present
+  const present = new Set(events.map(e=>e.cat));
+  const legendCats = CATS.map((c,i)=>({c,i})).filter(x=>present.has(x.i));
+  const legendHtml = (legendCats.length?legendCats:[]).map(x=>
+    `<span class="g-legitem"><span class="g-dot" style="background:${x.c.bg}"></span><span class="g-leglabel">${esc(x.c.name)}</span></span>`
+  ).join('');
+
+  // days
+  let bodyHtml = '';
+  for(const d of DAYS){
+    const dayEvents = sortDayEvents(events.filter(e=>e.day===d));
+    let cards;
+    if(!dayEvents.length){
+      cards = `<div class="g-emptyday">No events this week.</div>`;
+    }else{
+      cards = `<div class="g-cards">` + dayEvents.map(cardHtml).join('') + `</div>`;
+    }
+    bodyHtml += `<div class="g-day">
+      <div class="g-daylabel"><span>${DAY_FULL[d]}</span><span class="line"></span></div>
+      ${cards}
+    </div>`;
+  }
+
+  g.innerHTML = `
+    <div class="g-header">
+      <h1 class="g-chapter">${esc(title)}</h1>
+      <div class="g-weekof">WEEK OF ${esc(weekLabel)}</div>
+    </div>
+    ${legendHtml?`<div class="g-legend">${legendHtml}</div>`:''}
+    <div class="g-body">${bodyHtml}</div>
+    <div class="g-footer"><span>Made with Geaux AI · ${todayStr()}</span></div>
+  `;
+  scalePreview();
+}
+function cardHtml(e){
+  const c = CATS[e.cat];
+  const imp = e.important ? ' imp' : '';
+  const star = e.important ? `<div class="g-star">★</div>` : '';
+  const time = e.time ? esc(e.time) : '';
+  const loc = e.loc ? `<div class="g-loc">• ${esc(e.loc)}</div>` : '';
+  return `<div class="g-card${imp}">
+    <div class="g-leftbar" style="background:${c.bg}"></div>
+    ${star}
+    <div class="g-cardtop">
+      <span class="g-chip" style="background:${c.bg};color:${c.fg}">${esc(c.name)}</span>
+      ${time?`<span class="g-time">${time}</span>`:''}
+    </div>
+    <div class="g-name">${esc(e.name)}</div>
+    ${loc}
+  </div>`;
+}
+function scalePreview(){
+  const shell = document.querySelector('.preview-shell');
+  const scaleWrap = document.getElementById('previewScale');
+  const g = document.getElementById('graphic');
+  if(!shell) return;
+  const avail = shell.clientWidth - 32; // padding
+  const scale = Math.min(1, avail/1080);
+  scaleWrap.style.transform = `scale(${scale})`;
+  scaleWrap.style.height = (g.offsetHeight*scale) + 'px';
+}
+window.addEventListener('resize', ()=>{ if(document.getElementById('builderView').style.display!=='none') scalePreview(); });
+
+/* ======================= PNG EXPORT ======================= */
+async function downloadPng(){
+  const btn = document.getElementById('pngBtn');
+  const node = document.getElementById('graphic');
+  if(!window.htmlToImage || !window.htmlToImage.toPng){
+    showMsg('pngMsg','Image export library did not load (are you offline?). Take a screenshot of the preview instead.','err');
+    return;
+  }
+  btn.disabled = true; const orig = btn.textContent; btn.textContent = 'Rendering…';
+  try{
+    if(document.fonts && document.fonts.ready){ await document.fonts.ready; }
+    // reset scale so capture is 1:1, then restore
+    const scaleWrap = document.getElementById('previewScale');
+    const prevT = scaleWrap.style.transform, prevH = scaleWrap.style.height;
+    scaleWrap.style.transform='none'; scaleWrap.style.height='auto';
+    const dataUrl = await window.htmlToImage.toPng(node, {
+      pixelRatio: 2, cacheBust: true, backgroundColor: '#F4EFE4',
+      width: 1080, height: node.offsetHeight
+    });
+    scaleWrap.style.transform=prevT; scaleWrap.style.height=prevH;
+    const a = document.createElement('a');
+    const fnameDate = weekOf || new Date().toISOString().slice(0,10);
+    a.download = `sigep-week-of-${fnameDate}.png`;
+    a.href = dataUrl; a.click();
+    showMsg('pngMsg','Downloaded — post it to the chapter chat.','ok');
+  }catch(err){
+    console.error(err);
+    showMsg('pngMsg','Export failed. Take a screenshot of the preview instead. ('+err.message+')','err');
+  }finally{
+    btn.disabled=false; btn.textContent=orig;
+  }
+}
+// test hook (used by verification): returns dataURL length
+async function __exportDataUrl(){
+  await document.fonts.ready;
+  const node = document.getElementById('graphic');
+  return await window.htmlToImage.toPng(node, {pixelRatio:2, cacheBust:true, backgroundColor:'#F4EFE4', width:1080, height:node.offsetHeight});
+}
+
+/* ======================= HASH IMPORT ======================= */
+function handleHash(){
+  const m = location.hash.match(/load=([^&]+)/);
+  if(!m) return false;
+  try{
+    const decoded = decodeChair(m[1]);
+    decoded.forEach(e=>events.push(e));
+    persist();
+    // clean hash so refresh doesn't re-import
+    history.replaceState(null,'',location.pathname+location.search);
+    setMode('builder');
+    renderBuilderList(); renderGraphic();
+    toast(`Imported ${decoded.length} event(s) from a chair`);
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
+/* ======================= BOOT ======================= */
+(function boot(){
+  fillSelects();
+  restore();
+  renderChairList(); updateChairCode();
+  renderBuilderList();
+  const imported = handleHash();
+  if(!imported){
+    // default mode: chair, unless there is saved builder data
+    if(events.length || chapterName || weekOf){ setMode('builder'); }
+    else setMode('chair');
+  }
+  renderGraphic();
+})();
+window.addEventListener('hashchange', handleHash);
+</script>
+</body>
+</html>
